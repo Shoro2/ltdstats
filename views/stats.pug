@@ -15,7 +15,7 @@ block content
                         img.small_icon(src="/img/icons/diagram.png")
                     h4(onclick="showUnitStatSheet();") Fighter Stats Overview
                         img.small_icon(src="/img/icons/Royalty.png")
-                    h4(onclick="showFighterStats();") Fighter Pick/Winchances
+                    h4(onclick="showFighterStats();") Fighter Win/Usagerate
                         img.small_icon(src="/img/icons/CouncilDecal.png")
                     h4(onclick="showGamesPerDay();") Games per Day
                         img.small_icon(src="/img/icons/calendar.png")
@@ -48,6 +48,9 @@ block content
                 option(value="tsgte") > Date
                 option(value="tslt") < Date
             select#seasonselector.inline(onchange="saveSelection();")
+                option(value="rankedGames_8.0") Season 8
+                option(value="rankedGames_7.0") Season 7
+                option(value="rankedGames_6.0") Season 6
                 option(value="rankedGames_5.0") Season 5
                 option(value="rankedGames_4.0") Season 4
                 option(value="rankedGames_3.0") Season 3
@@ -103,4 +106,4 @@ block content
     script(src="/js/stats.js")
     script(src="/js/tabmenu.js")
     script(src="/js/stats_sort.js")
-    script openTab(1);
+    script openTab(1);checkUrl();

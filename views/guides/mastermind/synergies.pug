@@ -1,0 +1,424 @@
+extend ../../layout
+block content
+    link(rel='stylesheet', href='/css/guides.css')
+    .guide
+        h1#guide_title Mastermind Synergies
+        #guide_author 
+            i by 
+                a(href="/profile?player=Danwolf") Danwolf
+            a(href="/guides", style="float:right;") Back
+        #guide_infobox
+            #infobox_author Author: 
+                a(href="/profile?player=Danwolf") Danwolf
+            #infobox_version Version: v8.03
+            #infobox_section Section: Mastermind Guides
+            #infobox_content Content:
+                ul
+                    li
+                        a(href="#introduction") Introduction
+                    li 
+                        a(href="#rulesofthumb") Rules of Thumb
+                    li 
+                        a(href="#auras") Auras
+                    li 
+                        a(href="#doublingupauras") Doubling Up Auras
+                    li 
+                        a(href="#otherbuffs") Other Buffs and Units
+                    li 
+                        a(href="#antisynergie") Anti Synergie
+                    li 
+                        a(href="#typings") Typings
+                    li 
+                        a(href="#legionspells") Legion Spells 
+                    li 
+                        a(href="#expandedexamples") Expanded Examples 
+        p.
+        #guide_content
+                h2#introduction Introduction
+                br
+                | This guide is to provide a somewhat basic understanding of the synergies between units, and may also help more advanced players that have potentially overlooked some options.
+                br
+                br
+                | Before we go into the synergies, if you want to know more about what units specifically do and their strengths/weaknesses, make sure to check out the 
+                a.bb_link(href='https://steamcommunity.com/sharedfiles/filedetails/?id=2324638207' target='_blank' rel='noreferrer') Every Unit Explained 
+                | guide.
+                br
+                br
+                | I want to give a massive shoutout to Shadowings, who is not only a contributor to both guides, but been highly influential in writing them, and doing a lot of the work in getting everything into the guides.
+                br
+                br
+                | Lastly, the community have also helped with members such as Pennywise, Crazy, Magic and Julian also having input. They provided examples to not only me, but to whoever is reading this as well!
+                br
+                h2#rulesofthumb Rules of Thumb
+                br
+                | Here&apos;s a good rule about auras: Those with the same name don&apos;t stack (with the exception of Leviathan&apos;s aura that stacks twice), and when a unit is upgraded, the aura&apos;s name changes with it.
+                br
+                i
+                    | For example, you can apply Leech (Butcher&apos;s aura) and Cannibalism (Head Chef&apos;s aura) to the same unit, and each other.
+                br
+                br
+                | This rule also applies to the following merceneries, Hermit, Safety Mole, and Pack Leader. Sending more than one of each is counterproductive, as their auras won&apos;t stack.
+                br
+                br
+                | It&apos;s 
+                b not
+                |  efficient to use auras with cheaper units. Making a 700 gold unit (upgraded T6) 5% more effective is a gain of 35 gold while buffing a 100 gold unit by 5% only gives 5 gold! Aura units also aren&apos;t very strong by themselves, as their strength lies in buffing up those around it. For these reasons it&apos;s not advised to start with an aura unit.
+                h2#auras Auras
+                br
+                b Butcher/Head Chef
+                |  + Banana Haven, Green Devil, Fatalizer, Arctaire, Red-Eyes, Doppelganger and Hydra. Full or Off-Tanks with average to fast attacks. Alpha Male can also be paired with a Butcher, but if upgraded, Alpha Male may eat the Head Chef.
+                br
+                | This allows the units to live longer and thanks to the life stealing, killing more or the entirety of the wave.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371851/D47427CF9CB7E7712CE3757CD422AD91129D199C/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371851%2FD47427CF9CB7E7712CE3757CD422AD91129D199C%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371851/D47427CF9CB7E7712CE3757CD422AD91129D199C/' alt='' title='')
+                br
+                i
+                    | An ideal butcher placement in the above example, would be in the bottom left square so both the Doppelgangers get the aura from the Head Chef, and Butcher.
+                br
+                br
+                b White Mane
+                |  + King Claw, Green Devil, Antler, Hydra, Kingpin, Fatalizer, Doppelganger, Soul/Hell Gate and Golem.
+                br
+                | Essentially providing more bulk to your frontline, but can also be applied to your DPS units so they can survive longer.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371918/59DC5215B0A52A6D1521CFC81F08B4EAC5B05DE6/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371918%2F59DC5215B0A52A6D1521CFC81F08B4EAC5B05DE6%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371918/59DC5215B0A52A6D1521CFC81F08B4EAC5B05DE6/' alt='' title='')
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1658980030264759434/24FE84BFFA2CC7623A77CE1F5074AFFAB4A8DEC8/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1658980030264759434%2F24FE84BFFA2CC7623A77CE1F5074AFFAB4A8DEC8%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1658980030264759434/24FE84BFFA2CC7623A77CE1F5074AFFAB4A8DEC8/' alt='' title='')
+                br
+                br
+                b Leviathan
+                |  + Violet, Fenix, Canopie, Tempest and Sky Queen.
+                br
+                | Leviathan&apos;s ability specifically boosts the DPS of flying units, allowing them to clear the wave quicker.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371860/CEA75195FAD76E3A9A3EDE22A18112045FF8EE11/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371860%2FCEA75195FAD76E3A9A3EDE22A18112045FF8EE11%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371860/CEA75195FAD76E3A9A3EDE22A18112045FF8EE11/' alt='' title='')
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371870/8BF6B125551794621BC161478A50F3DD0B4B0F82/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371870%2F8BF6B125551794621BC161478A50F3DD0B4B0F82%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371870/8BF6B125551794621BC161478A50F3DD0B4B0F82/' alt='' title='')
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1672491522502742980/487020A1A789CF0C3C9CA3663A19043B6C732225/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1672491522502742980%2F487020A1A789CF0C3C9CA3663A19043B6C732225%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1672491522502742980/487020A1A789CF0C3C9CA3663A19043B6C732225/' alt='' title='')
+                br
+                i
+                    | Leviathan also stacks twice, so can place another Leviathan with the Sky Queens so they can get two stacks of Aerial Command. In particular, in the first example you can upgrade the Tempests to the right, but on the last example you can also place more Harpies on the sides of the Leviathans.
+                br
+                br
+                b Starcaller
+                |  + Violet, Harbringer, Priestess of the Abyss, Hades, Pegasus, Fenix, Sky Queen and Hell Gate. Essentially anything that regenerates mana during the battle - Extra Note: Fenix is an odd one as sometimes you want it&apos;s mana to go low for that dps boost.
+                br
+                | Allows mana based units to trigger their spell more often.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371894/63C871D2044DC7FED2C10A64E542F0BF9DC8E449/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371894%2F63C871D2044DC7FED2C10A64E542F0BF9DC8E449%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371894/63C871D2044DC7FED2C10A64E542F0BF9DC8E449/' alt='' title='')
+                br
+                br
+                b Ocean Templer
+                |  + Kingclaw, Green Devil, Sand Badger (Tanks), along with units that have deminishing or start half health such as Soul/Hell Gate, Wileshroom/Canopie, Lord of Death/Hades and Gateguard/Harbringer.
+                br
+                | Ocean Templer&apos;s aura, makes them more resistant to magic damage, whilst they still recover some missing HP.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371890/BA2FC3A125D68185B287FF281872B56E04063C96/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371890%2FBA2FC3A125D68185B287FF281872B56E04063C96%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371890/BA2FC3A125D68185B287FF281872B56E04063C96/' alt='' title='')
+                br
+                i
+                    | Extra Note - An Iron Scales with the Ocean Templer aura is near invincible on 14/15.
+                br
+                br
+                b APS/MPS
+                |  + Area of Effect (AoE) units like Pyros, Masked Spirit, Elite Archer or Fire Elemental.
+                br
+                | AoE units&apos; strength comes from killing the wave quickly, meaning an APS/MPS buffs their strength immensly.
+                br
+                | It is also good with high dps single target units, most notably Millenium and Doomsday machine! Other honorable mentions are Fenix, Nightmare, Sky Queen, Kingpin and Azeria.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371883/4D4720A64A8CDF6E25381A20EE14509C1EDDA37D/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371883%2F4D4720A64A8CDF6E25381A20EE14509C1EDDA37D%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371883/4D4720A64A8CDF6E25381A20EE14509C1EDDA37D/' alt='' title='')
+                br
+                i
+                    | An APS could also be placed in the bottom left square so two Fire Elementals can be buffed both; by the APS, and the MPS.
+                br
+                br
+                b Alpha Male
+                |  + 
+                b Lioness
+                |  + Canopie, Violet, Pegasus, Orchid, Leviathan, Lord of Death and Nekomata (Perfect values that work with both the Alpha Male and Lioness). 
+                br
+                | The Lioness deals more dps/gold than the alpha male even at 0 stacks; at 3 stacks the hp/gold are roughly equal.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371874/2C9594A9678B88ECF3C6D83ABB17232CDFDBAC73/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371874%2F2C9594A9678B88ECF3C6D83ABB17232CDFDBAC73%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371874/2C9594A9678B88ECF3C6D83ABB17232CDFDBAC73/' alt='' title='')
+                br
+                br
+                i
+                    | Or if you have no units of that value you can still do this to create 4 buffs for the Lioness without debuffing the Alpha Males.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371910/E77A1DDD1E03E8B2297A6A132B93D1C2EF4A8EF7/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371910%2FE77A1DDD1E03E8B2297A6A132B93D1C2EF4A8EF7%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371910/E77A1DDD1E03E8B2297A6A132B93D1C2EF4A8EF7/' alt='' title='')
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371902/7642A4BF07428D8E0A542F705591A897ADEFEC18/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329371902%2F7642A4BF07428D8E0A542F705591A897ADEFEC18%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329371902/7642A4BF07428D8E0A542F705591A897ADEFEC18/' alt='' title='')
+                h2#doublingupauras Doubling Up Auras
+                br
+                b Whitemane
+                |  + 
+                b Head Chef/Butcher
+                |  + Doppelganger, Hades, Harbringers and Hell Gates.
+                br
+                | Turn your high DPS into units into off-tanks/bruisers.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1672491383395622509/13A87C251A0C1EEBDA99DD6F100C476DD6805644/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1672491383395622509%2F13A87C251A0C1EEBDA99DD6F100C476DD6805644%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1672491383395622509/13A87C251A0C1EEBDA99DD6F100C476DD6805644/' alt='' title='')
+                br
+                br
+                b Whitemane
+                |  + 
+                b Starcaller
+                |  + Hell Gate, Harbringer and Hades (Summoners).
+                br
+                | Very quick summons that become off-tanks/bruisers. You can expand on this further adding Steeds/Pegasus into the mix for even quicker summons.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1672491522502806671/DE18BABD8CF06AB184EB659A43ED64268ACCA960/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1672491522502806671%2FDE18BABD8CF06AB184EB659A43ED64268ACCA960%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1672491522502806671/DE18BABD8CF06AB184EB659A43ED64268ACCA960/' alt='' title='')
+                br
+                br
+                b Head Chef/Butcher
+                |  + 
+                b Starcaller
+                |  + Hell Gate, Harbringer and Hades (Summoners), Violets, Kingclaw (Tankier mana users).
+                br
+                | Units that can use their ability more often thanks to the combination of lifesteal and a quicker mana generation. Head Chef itself also uses mana to get it&apos;s secondary heal, so this will happen more often thanks to the Starcaller aura.
+                br
+                h2#otherbuffs Other Buffs and Units
+                br
+                b Steed/Pegasus
+                |  + Bounty Hunter, Hades, Harbringer, Sky Queen, Hell Gate, Atom, Fire Archer, Dark Mage, and Starcaller. 
+                br
+                | Allows these units to gain mana at an increased rate, whilst Angler/Bounty Hunter keeps the mana it gains from the Steed/Pegasus.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1658979296798318299/320E859E77AED2F43FB3BEF5FC1E97A76604B89C/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1658979296798318299%2F320E859E77AED2F43FB3BEF5FC1E97A76604B89C%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1658979296798318299/320E859E77AED2F43FB3BEF5FC1E97A76604B89C/' alt='' title='')
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1658979296798329405/F3698BB0A262CD68BB1470C06769C49704CBFC1C/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1658979296798329405%2FF3698BB0A262CD68BB1470C06769C49704CBFC1C%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1658979296798329405/F3698BB0A262CD68BB1470C06769C49704CBFC1C/' alt='' title='')
+                br
+                i
+                    | Be aware of the anti-synergy of Protons in this setup as they&apos;ll eat up the mana preventing higher priority targets getting the mana blessing.
+                br
+                br
+                b Dark Mage
+                |  + Fenix, Nightmare and Doomsday Machine.
+                br
+                | Very similar to the APS/MPS aura to allow your damage dealing units to get more attacks in, however it&apos;s limited by mana and time but not an aura making it more effective with high cost units.
+                br
+                br
+                b Dark Mage
+                |  + 
+                b Head Chef/Butcher
+                |  + Fenix, Doppelganger.
+                br
+                | High damaging units that replinish HP quickly. This is a combination that not only increases the attack speed of the units, but they also steal life at a quicker rate.
+                br
+                br
+                b Red-Eyes + Fire Elemental, Pyro, Deathcaps
+                |  (AoE).
+                br
+                | Since you&apos;re playing for the AoE, Red-Eyes help deal significiant damage to the wave thanks to the splash, whilst also tanking for the rest of the AoE damage.
+                br
+                br
+                b Rogue Wave + Fire Elemental, Pyro, Deathcaps
+                |  (AoE).
+                br
+                | This allows the AoE to deal more damage thanks to Rogue Wave&apos;s Delusion debuffing units hit by its&apos; attack.
+                br
+                br
+                b Desert Pilgrim/Lost Chieftain
+                |  + Whitemane, Hero, and Ocean Templar (Damage Reduction).
+                br
+                | This essentially buffs the heal of the Desert Pilgrim due to the increased damage reduction but also buffs the furthest target in range with a flat HP boost from Lost Chieftain.
+                br
+                br
+                b Deepcoiler
+                |  + 
+                b Pyro and Deathcaps
+                |  (AoE).
+                br
+                | This is due to the Hermit being the most common counter to an AoE build and with a Deepcoiler in the correct positioning it will snipe the Hermit preventing it countering the AoE damage of your roll.
+                br
+                h2#antisynergie Anti-Synergy
+                br
+                | To help you with your units/build in particular these are units that you don&apos;t really want to build together as they can often cause conflicts.
+                br
+                br
+                b Harpies/Great Boar + Sea Serpent
+                br
+                | This is due to the Harpies/Great Boar wanting to travel up to the highest point in the lane to start causing damage, whereas the Sea Serpent wants to flank the wave and deal as much damage as possible.
+                br
+                br
+                b Steed + Proton + Other Mana Unit(s)
+                br
+                | While on the face of it, Steed&apos;s synergize with Protons by giving them mana, 
+                b however
+                |  it&apos;s not a great use of the ability as it will take mana away from more important units such as but not limited to: Lord of Death, Soul Gate, Violet, Starcaller, Bounty Hunter, Priestess of the Abyss... etc so if you have Steeds in your roll it&apos;s more useful to select a different T1 that is 
+                b not
+                |  Protons.
+                br
+                br
+                b Butcher
+                |  + 
+                b Ranged DPS
+                br
+                | Butcher + ranged DPS units don&apos;t work well together for a few reasons; firstly most ranged DPS units don&apos;t have a high enough health pool to tank, secondly the Butcher/Head Chef will pull the wave towards it due to it being melee (depending on your positioning this will pull the wave to the ranged units), lastly ranged units will tank last usually and therefore not utilising the aura for 90% of the wave.
+                br
+                h2#typings Typings
+                br
+                | When it comes to picking your roll you want to try not to pick a roll that has no answer to a specific damage/armour typing, and ideally you&apos;re looking for typing that are mutually beneficial of each other.
+                br
+                br
+                i
+                    | To expand on this slightly further, if the only real damage in your roll is pierce, you will struggle on wave 6, whilst if your only armour typings are natural/fortified, you&apos;ll struggle on 7 and 8.
+                br
+                br
+                | Below are some good examples of typing that work together:
+                br
+                .bb_h3 Tanks:
+                b Green Devil
+                |  (Arcane) + 
+                b Whitemane
+                |  (Natural) = both cover each others weakness in terms of tankiness.
+                br
+                b Mudman
+                |  (Fortified) + 
+                b Yozora
+                |  (Swift) = like above, both covers each others defensive weakness.
+                br
+                br
+                .bb_h3 Damage:
+                b Dapne
+                |  (Pierce) + 
+                b Violet/Zeus
+                |  (Impact/Magic) = Covers all three damage types as both Violet and Zeus do magic damage thanks to their ability, while Daphne does pierce and debuffs enemies so they take more damage.
+                br
+                b Honeyflower
+                |  (Magic) + 
+                b Masked Spirit
+                |  (Pierce) = Good AoE coverage, and masks can provide tanking for the Honeyflower(s).
+                br
+                br
+                .bb_h3 Sword and Shield:
+                b Wileshroom
+                |  (Impact/Arcane) + 
+                b Consort
+                |  (Pierce/Nature) = Covers each other&apos;s weaknesses.
+                br
+                b Gargoyle
+                |  (Magic/Arcane) + 
+                b Consort
+                |  (Pierce/Nature) = Covers each other&apos;s weaknesses perfectly.
+                br
+                | Tanks + 
+                b Atom
+                |  (Pure/Immaterial) = Help the Atom&apos;s survive longer so they can ramp up their damage further.
+                br
+                b Zeus
+                |  + 
+                b Red-Eyes
+                |  = A lot of front loaded damage, and the Boar/Red-Eyes is the perfect counterpart to Zeus&apos;s swift armour, along with dealing a bit of pierce damage that compliments Zeus&apos;s magic/impact damage.
+                br
+                h2#legionspells Legion Spells
+                br
+                | After Wave 10 has been cleared you will have the chance to select a Legion Spell.
+                br
+                | These can benefit and synergize with your units massively. You can also see what spells are available at the start of the game when choosing your Mastermind option and roll allowing you to maximise the buffs from the spell.
+                br
+                br
+                b Magician
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329473200/0820BD470C8FEEA7A6E5BE8C70703F124C8F7E65/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329473200%2F0820BD470C8FEEA7A6E5BE8C70703F124C8F7E65%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329473200/0820BD470C8FEEA7A6E5BE8C70703F124C8F7E65/' alt='' title='')
+                br
+                | Units that require a lot of mana regeneration, such as Sky Queens, Soul Gates, Lord of Death, Violets and Harbringers.
+                br
+                br
+                b Sorceror
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478448/F3906FFC5F8A1DFDEF69C5D42FE3E663C67D848A/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478448%2FF3906FFC5F8A1DFDEF69C5D42FE3E663C67D848A%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478448/F3906FFC5F8A1DFDEF69C5D42FE3E663C67D848A/' alt='' title='')
+                br
+                | Units that do a lot of ability damage, such as Trinity Archers, Deathcap, Azeria, Starcaller, Arc of Justice, Banana Haven, and Doomsday Machine.
+                br
+                br
+                b Pulverizer
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478444/901D7B72295C0D9090F8C3B62E147F5784C444DE/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478444%2F901D7B72295C0D9090F8C3B62E147F5784C444DE%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478444/901D7B72295C0D9090F8C3B62E147F5784C444DE/' alt='' title='')
+                br
+                | Units that have a very fast attack speed, such as Doppelganger or Zeus.
+                br
+                br
+                b Titan
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478456/9F8C39782BCD5ABFD8F1DD76022B6F1313B3EC18/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478456%2F9F8C39782BCD5ABFD8F1DD76022B6F1313B3EC18%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478456/9F8C39782BCD5ABFD8F1DD76022B6F1313B3EC18/' alt='' title='')
+                br
+                | Units that you want to tank for longer, such as Banana Bunk, Kingpin, Golem. It is really good with Azeria since Azeria&apos;s heal is based on her maximum HP. It is also great with a fully stacked Lioness since every point of hp is 40% more effective!
+                br
+                br
+                b Hero
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329484875/13FD23592BC29D7D1FA6F823994D5A2EC1BD2E57/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329484875%2F13FD23592BC29D7D1FA6F823994D5A2EC1BD2E57%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329484875/13FD23592BC29D7D1FA6F823994D5A2EC1BD2E57/' alt='' title='')
+                br
+                | Units that are in your core. It&apos;ll increase the damage of your DPS units, whilst also making them able to tank more damage. For example Hero Butcher Doppel/Kingpins or Whitemane Hell Gates.
+                br
+                br
+                b Guardian Angel
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478430/B865B804666D123E911EBAF11BC6B93D174DA520/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478430%2FB865B804666D123E911EBAF11BC6B93D174DA520%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478430/B865B804666D123E911EBAF11BC6B93D174DA520/' alt='' title='')
+                br
+                | Units that generally deal a lot of DPS, or are going to die quick. Doppelgangers, Kingpins and Fenixes are prime examples. Best used with Lifesteal since these units dont revive with full HP. 
+                br
+                br
+                b Vampire
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478463/F04A22479AF01660830B97542096748C3C32CFBE/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478463%2FF04A22479AF01660830B97542096748C3C32CFBE%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478463/F04A22479AF01660830B97542096748C3C32CFBE/' alt='' title='')
+                br
+                | Units that are adjacent to more of your DPS so they can lifesteal and survive longer. Even better when paired with Butcher/Head Chef auras. most notably used with Doppelganger and Kingpin.
+                br
+                br
+                b Villian
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478470/FB14E2F0FE9FF6C4B3AF432377AF8CC3FFBBCE56/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478470%2FFB14E2F0FE9FF6C4B3AF432377AF8CC3FFBBCE56%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478470/FB14E2F0FE9FF6C4B3AF432377AF8CC3FFBBCE56/' alt='' title='')
+                br
+                | Ideally used with Melee units that have high dps and live long, such as Doppelganger and Kingpin. Honorable mentions are high dps ranged units like Zeus.
+                br
+                br
+                b Protector
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478438/3B7C6F63EB26BB80746DB895B3D061508A41799D/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852359329478438%2F3B7C6F63EB26BB80746DB895B3D061508A41799D%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852359329478438/3B7C6F63EB26BB80746DB895B3D061508A41799D/' alt='' title='')
+                br
+                | Units that are going to survive the longest to keep the aura. A good example is Priestess of the Abyss/Azeria (doubly effective since the max hp buff does increase the heal). You can also use a Pack Rat and constantly treasure hunt it for the aura to always remain.
+                br
+                h2#expandedexamples Expanded Examples
+                br
+                | Here&apos;s a few examples of utilising the synergies and auras while building your lane. You&apos;ll also be able to add legion spells into these builds to make them even more deadlier to the opposing forces.
+                br
+                br
+                | In this example you have the forsaken core of Head Chef, Butcher, Dark Mage and Doppelganger, whilst also having protection from the Samurai Souls and a life stealing Fenix. Then on the split you have the natural tanks of Alpha Males with the dps of a Lioness.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852752875093711/9CA8B4CF554E8F786CAD7051A4776F0AE0E27300/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852752875093711%2F9CA8B4CF554E8F786CAD7051A4776F0AE0E27300%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852752875093711/9CA8B4CF554E8F786CAD7051A4776F0AE0E27300/' alt='' title='')
+                br
+                br
+                | This example shows the strength of Leviathan&apos;s aura buffing multiple Fenixes whilst also turning one, and two Doppelgangers into more of bruisers thanks to the Whitemane aura.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1657852752875093719/8D9A47F3CDC1F2461D0BB75F4BEB5E1FFA993E90/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1657852752875093719%2F8D9A47F3CDC1F2461D0BB75F4BEB5E1FFA993E90%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1657852752875093719/8D9A47F3CDC1F2461D0BB75F4BEB5E1FFA993E90/' alt='' title='')
+                br
+                br
+                | As mentioned earlier, he&apos;s an example benefitting from the synergy of Pyros, Red-Eyes and Rogue Wave.
+                br
+                a.modalContentLink(href='https://steamuserimages-a.akamaihd.net/ugc/1760316495752706596/0BF8A6189F11C1EBD0386D54C9FA61543E3203B6/' data-modal-content-popup-url='https://steamcommunity.com/sharedfiles/displayimageformodaldialog/?imageurl=https%3A%2F%2Fsteamuserimages-a.akamaihd.net%2Fugc%2F1760316495752706596%2F0BF8A6189F11C1EBD0386D54C9FA61543E3203B6%2F')
+                    img.sharedFilePreviewImage.sizeOriginal.inline(src='https://steamuserimages-a.akamaihd.net/ugc/1760316495752706596/0BF8A6189F11C1EBD0386D54C9FA61543E3203B6/' alt='' title='')

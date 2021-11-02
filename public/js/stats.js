@@ -5,6 +5,61 @@
  * 4. add help
  * */
 
+// load subpage by url
+
+var abfrage="";
+
+function checkUrl(){
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var query = url.searchParams.get("query");
+    console.log(abfrage);
+    if(abfrage.length<=0){
+        switch(query){
+            case "fighterstatsheet":
+                showUnitStatSheet();
+                break;
+            case "elodistribution":
+                showEloDistribution();
+            case "gamesperday":
+                showGamesPerDay();
+                break;
+            case "winrates":
+                showWinPickrates();
+                break;
+            case "workersperwave":
+                showWorkersPerWave();
+                break;
+            case "networthperwave":
+                showNetworthPerWave();
+                break;
+            case "valueonend":
+                showValueOnEnd();
+                break;
+            case "incomeonend":
+                showIncomeOnEnd();
+                break;
+            case "workersonend":
+                showWorkersOnEnd();
+                break;
+            case "leaksonend":
+                showLeaksOnEnd();
+                break;
+            case "gameendingwaves":
+                showGameEndingWaves();
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+
+
+function parseUrl(input){
+    window.history.pushState("", "", '/stats?query='+input);
+}
+
 //show container
 function showStatsPage() {
     document.getElementById("stats").style.display = "inherit";
@@ -14,7 +69,9 @@ function showLoad() {
 }
 function hideStatsPage() {
     document.getElementById("stats").style.display = "none";
-    myChart.destroy();
+    if(myChart) myChart.destroy();
+    window.history.pushState("", "", '/stats');
+    abfrage="";
 }
 function hideLoad() {
     document.getElementById("mitte").style.display = "none";
@@ -78,7 +135,7 @@ function createLineGraph(data) {
         data: {
             labels: [],
             datasets: [{
-                label: 'Elo Distribution',
+                label: 'Elo',
                 data: [],
                 backgroundColor: [
                     'rgba(255, 159, 64, 0.2)'
@@ -105,63 +162,24 @@ function createLineGraph(data) {
                 }
         }
     });
-    var eloDistribution = data.stats.eloDistribution;
-    var elos = [1600, 1500, 1400, 1300, 1250, 1200, 1150, 1100, 1050, 1000, 900, 800];
-    var percentages = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var eloDistribution = data.stats[0].eloDistribution;
+
     for (var i = 0; i < eloDistribution.length; i++) {
-        if (eloDistribution[i].elo >= elos[0]) {
-            percentages[0]++;
-        }
-        else if (eloDistribution[i].elo >= elos[1]) {
-            percentages[1]++;
-        }
-        else if (eloDistribution[i].elo >= elos[2]) {
-            percentages[2]++;
-        }
-        else if (eloDistribution[i].elo >= elos[3]) {
-            percentages[3]++;
-        }
-        else if (eloDistribution[i].elo >= elos[4]) {
-            percentages[4]++;
-        }
-        else if (eloDistribution[i].elo >= elos[5]) {
-            percentages[5]++;
-        }
-        else if (eloDistribution[i].elo >= elos[6]) {
-            percentages[6]++;
-        }
-        else if (eloDistribution[i].elo >= elos[7]) {
-            percentages[7]++;
-        }
-        else if (eloDistribution[i].elo >= elos[8]) {
-            percentages[8]++;
-        }
-        else if (eloDistribution[i].elo >= elos[9]) {
-            percentages[9]++;
-        }
-        else if (eloDistribution[i].elo >= elos[10]) {
-            percentages[10]++;
-        }
-        else if (eloDistribution[i].elo >= elos[11]) {
-            percentages[11]++;
-        }
-    }
-    for (var i = 0; i < elos.length; i++) {
-        if (percentages[i] == 0) percentages[i] = 0.1;
-        addData(myChart, elos[i], percentages[i]);
+
+        addData(myChart, eloDistribution[i].percentile, eloDistribution[99-i].elo);
     }
 }
 function createBarGraph(data) {
     hideLoad();
     var graphColor = ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'];
-    var legions = ["Atlantean", "Element", "Forsaken", "Grove", "Mastermind", "Mech"];
+    var legions = ["Atlantean", "Element", "Forsaken", "Grove", "Mastermind", "Mech", "Nomad", "Shrine", "Hybrid", "Chaos"];
     // parse data
     switch (abfrage) {
         case "workersperwave":
             data = data.stats.legionAverageWorkersPerWave;
             var total_picks = 0;
             var workersperwave = [];
-            for (var i = 0; i < 6; i++) {
+            for (var i = 0; i < 10; i++) {
                 workersperwave[i] = new Array(21);
             }
             //0: atlantean
@@ -191,6 +209,18 @@ function createBarGraph(data) {
                     case "Mech":
                         workersperwave[5][data[i].wave - 1] = data[i].workers;
                         break;
+                    case "Nomad":
+                        workersperwave[6][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Shrine":
+                        workersperwave[7][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Hybrid":
+                        workersperwave[8][data[i].wave - 1] = data[i].workers;
+                        break;
+                    case "Chaos":
+                        workersperwave[9][data[i].wave - 1] = data[i].workers;
+                        break;
                 }
             }
             var meinText = "Average Workercount per Wave";
@@ -199,66 +229,104 @@ function createBarGraph(data) {
             var data = JSON.parse(data);
             var total_picks = 0;
             for (var i = 0; i < data.length; i++) {
-                if (data[i]._id.gameresult != "tie" && data[i]._id.gameresult != "null") total_picks += data[i].count;
+                if (data[i]._id.gameResult != "tie" && data[i]._id.gameResult != "null") total_picks += data[i].count;
             }
-            var picks_amount = [0, 0, 0, 0, 0, 0];
-            var wins_amount = [0, 0, 0, 0, 0, 0];
-            var winchance = [0, 0, 0, 0, 0, 0];
-            var pickchance = [0, 0, 0, 0, 0, 0];
+            console.log(total_picks);
+            var picks_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var wins_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var winchance = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var pickchance = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             for (var i = 0; i < data.length; i++) {
+                console.log(data[i]);
                 switch (data[i]._id.legion) {
                     case "Atlantean":
-                        if (data[i]._id.gameresult == "won") {
+                        if (data[i]._id.gameResult == "won") {
                             wins_amount[0] += parseInt(data[i].count);
                             picks_amount[0] += parseInt(data[i].count);
                         }
-                        else if (data[i]._id.gameresult == "lost") {
+                        else if (data[i]._id.gameResult == "lost") {
                             picks_amount[0] += parseInt(data[i].count);
                         }
                         break;
                     case "Element":
-                        if (data[i]._id.gameresult == "won") {
+                        if (data[i]._id.gameResult == "won") {
                             wins_amount[1] += parseInt(data[i].count);
                             picks_amount[1] += parseInt(data[i].count);
                         }
-                        else if (data[i]._id.gameresult == "lost") {
+                        else if (data[i]._id.gameResult == "lost") {
                             picks_amount[1] += parseInt(data[i].count);
                         }
                         break;
                     case "Forsaken":
-                        if (data[i]._id.gameresult == "won") {
+                        if (data[i]._id.gameResult == "won") {
                             wins_amount[2] += parseInt(data[i].count);
                             picks_amount[2] += parseInt(data[i].count);
                         }
-                        else if (data[i]._id.gameresult == "lost") {
+                        else if (data[i]._id.gameResult == "lost") {
                             picks_amount[2] += parseInt(data[i].count);
                         }
                         break;
                     case "Grove":
-                        if (data[i]._id.gameresult == "won") {
+                        if (data[i]._id.gameResult == "won") {
                             wins_amount[3] += parseInt(data[i].count);
                             picks_amount[3] += parseInt(data[i].count);
                         }
-                        else if (data[i]._id.gameresult == "lost") {
+                        else if (data[i]._id.gameResult == "lost") {
                             picks_amount[3] += parseInt(data[i].count);
                         }
                         break;
                     case "Mastermind":
-                        if (data[i]._id.gameresult == "won") {
+                        if (data[i]._id.gameResult == "won") {
                             wins_amount[4] += parseInt(data[i].count);
                             picks_amount[4] += parseInt(data[i].count);
                         }
-                        else if (data[i]._id.gameresult == "lost") {
+                        else if (data[i]._id.gameResult == "lost") {
                             picks_amount[4] += parseInt(data[i].count);
                         }
                         break;
                     case "Mech":
-                        if (data[i]._id.gameresult == "won") {
+                        if (data[i]._id.gameResult == "won") {
                             wins_amount[5] += parseInt(data[i].count);
                             picks_amount[5] += parseInt(data[i].count);
                         }
-                        else if (data[i]._id.gameresult == "lost") {
+                        else if (data[i]._id.gameResult == "lost") {
                             picks_amount[5] += parseInt(data[i].count);
+                        }
+                        break;
+                    case "Nomad":
+                        if (data[i]._id.gameResult == "won") {
+                            wins_amount[6] += parseInt(data[i].count);
+                            picks_amount[6] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameResult == "lost") {
+                            picks_amount[6] += parseInt(data[i].count);
+                        }
+                        break;
+                    case "Shrine":
+                        if (data[i]._id.gameResult == "won") {
+                            wins_amount[7] += parseInt(data[i].count);
+                            picks_amount[7] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameResult == "lost") {
+                            picks_amount[7] += parseInt(data[i].count);
+                        }
+                        break;
+                    case "Hybrid":
+                        if (data[i]._id.gameResult == "won") {
+                            wins_amount[8] += parseInt(data[i].count);
+                            picks_amount[8] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameResult == "lost") {
+                            picks_amount[8] += parseInt(data[i].count);
+                        }
+                        break;
+                    case "Chaos":
+                        if (data[i]._id.gameResult == "won") {
+                            wins_amount[9] += parseInt(data[i].count);
+                            picks_amount[9] += parseInt(data[i].count);
+                        }
+                        else if (data[i]._id.gameResult == "lost") {
+                            picks_amount[9] += parseInt(data[i].count);
                         }
                         break;
                     default:
@@ -266,11 +334,11 @@ function createBarGraph(data) {
                         break;
                 }
             }
-            for (var i = 0; i < 6; i++) {
+            for (var i = 0; i < 10; i++) {
                 pickchance[i] = ((picks_amount[i] / total_picks) * 100).toFixed(2);
                 winchance[i] = ((wins_amount[i] / picks_amount[i]) * 100).toFixed(2);
             }
-            var meinText = "Pick- & Winrates per Legion in % (Total Games: " + total_picks/4 + ")";
+            var meinText = "Pick- & Winrates per Legion in % (Total Games: " + total_picks/8 + ")";
             break;
         case "networthperwave":
             data = data.stats.legionAverageNetWorthPerWave;
@@ -426,18 +494,19 @@ function createBarGraph(data) {
         case "gameendingwave":
             var gameendingwaves = [];
             var total_games = 0;
+            console.log(data);
             for (var i = 0; i < 21; i++) {
                 //gameendingwaves[i] = data[i].count;
-                gameendingwaves[i] = data.filter(data => data._id.wave == i+1)[0];
-                total_games=total_games+data.filter(data => data._id.wave == i+1)[0].count;
-                if(typeof gameendingwaves[i] == "undefined") gameendingwaves[i]={_id:{wave:i+1},count:0};
+                gameendingwaves[i] = data.filter(data => data._id.endingWave == i+1)[0];
+                total_games = total_games + data.filter(data => data._id.endingWave == i+1)[0].count;
+                if(typeof gameendingwaves[i] == "undefined") gameendingwaves[i] = {_id:{endingWave:i+1},count:0};
             }
             var meinText = "Wave games ended on ("+total_games+" games total)";
             break;
         case "fighterstats":
             var winchance = (data.winchance*100).toFixed(2);
             var pickchance = (data.pickchance*100).toFixed(2);
-            var meinText = data.fighter.charAt(0).toUpperCase()+data.fighter.slice(1)+"'s Pick- and Winchance";
+            var meinText = data.fighter.charAt(0).toUpperCase()+data.fighter.slice(1)+"'s Win- and Usagerate in %";
             break;
         case "gamesperday":
             var gamecount = JSON.parse(data);
@@ -479,12 +548,14 @@ function createBarGraph(data) {
     switch (abfrage) {
         case "winrates":
             //calc winrates
-            myChart.data.labels.push("Atlantean", "Element", "Forsaken", "Grove", "Mastermind", "Mech");
-            myChart.data.datasets.push({ label: "Pickrate", data: [], backgroundColor: ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+            console.log(pickchance);
+            console.log(winchance);
+            myChart.data.labels.push("Atlantean", "Element", "Forsaken", "Grove", "Mastermind", "Mech", "Nomad", "Shrine", "Hybrid", "Chaos");
+            myChart.data.datasets.push({ label: "Pickrate", data: [], backgroundColor: ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
             myChart.update();
-            myChart.data.datasets.push({ label: "Winrate", data: [], backgroundColor: ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
+            myChart.data.datasets.push({ label: "Winrate", data: [], backgroundColor: ['rgba(139, 0, 139, 0.8)', 'rgba(255, 255, 0, 0.8)', 'rgba(255, 0, 0, 0.8)', 'rgba(0, 255, 0, 0.8)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(0, 0, 255, 0.8)'], borderColor: 'rgba(0,0,0,1)', borderWidth: 1 });
             myChart.update();
-            for (var i = 0; i < 6; i++) {
+            for (var i = 0; i < 10; i++) {
                 myChart.data.datasets[0].data.push(pickchance[i]);
                 myChart.update();
                 myChart.data.datasets[1].data.push(winchance[i]);
@@ -509,6 +580,14 @@ function createBarGraph(data) {
                 myChart.data.datasets[4].data.push(workersperwave[4][i]);
                 myChart.update();
                 myChart.data.datasets[5].data.push(workersperwave[5][i]);
+                myChart.update();
+                myChart.data.datasets[6].data.push(workersperwave[6][i]);
+                myChart.update();
+                myChart.data.datasets[7].data.push(workersperwave[7][i]);
+                myChart.update();
+                myChart.data.datasets[8].data.push(workersperwave[8][i]);
+                myChart.update();
+                myChart.data.datasets[9].data.push(workersperwave[9][i]);
                 myChart.update();
             }
             break;
@@ -627,8 +706,8 @@ function createBarGraph(data) {
             }
             break;
         case "fighterstats":
-            myChart.data.labels.push("Winchance", "Pickchance");
-            myChart.data.datasets.push({ label: "Chance in %", data: [], backgroundColor: graphColor[0], borderColor: 'rgba(1,1,1,1)', borderWidth: 1 });
+            myChart.data.labels.push("Winrate", "Usagerate");
+            myChart.data.datasets.push({ label: "Rate in %", data: [], backgroundColor: graphColor[0], borderColor: 'rgba(1,1,1,1)', borderWidth: 1 });
             myChart.update();
             myChart.data.datasets[0].data.push(winchance);
             myChart.data.datasets[0].data.push(pickchance);
@@ -656,12 +735,7 @@ function addData(chart, label, data) {
     chart.update();
 }
 
-function showEloDistribution(data) {
-    hideLoad();
-    hideInputs();
-    showStatsPage();
-    createLineGraph(data);
-}
+
 
 function saveSelection() {
     type = document.getElementById("typeselector").value;
@@ -693,6 +767,7 @@ function showWinPickrates() {
     hideFighterName();
     hideSeason();
     abfrage = "winrates";
+    parseUrl(abfrage);
 }
 function showWorkersPerWave() {
     document.getElementById("chartContainer").style.display = "";
@@ -704,6 +779,7 @@ function showWorkersPerWave() {
     hideFighterName();
     hideSeason();
     abfrage = "workersperwave";
+    parseUrl(abfrage);
 }
 function showNetworthPerWave() {
     document.getElementById("chartContainer").style.display = "";
@@ -715,6 +791,7 @@ function showNetworthPerWave() {
     hideFighterName();
     hideSeason();
     abfrage = "networthperwave";
+    parseUrl(abfrage);
 }
 function showValueOnEnd() {
     document.getElementById("chartContainer").style.display = "";
@@ -726,6 +803,7 @@ function showValueOnEnd() {
     hideFighterName();
     hideSeason();
     abfrage = "valueonend";
+    parseUrl(abfrage);
 }
 function showIncomeOnEnd() {
     document.getElementById("chartContainer").style.display = "";
@@ -737,6 +815,7 @@ function showIncomeOnEnd() {
     hideFighterName();
     hideSeason();
     abfrage = "incomeonend";
+    parseUrl(abfrage);
 }
 function showWorkersOnEnd() {
     document.getElementById("chartContainer").style.display = "";
@@ -748,6 +827,7 @@ function showWorkersOnEnd() {
     hideElo();
     hideSeason();
     abfrage = "workersonend";
+    parseUrl(abfrage);
 }
 function showLeaksOnEnd() {
     document.getElementById("chartContainer").style.display = "";
@@ -759,6 +839,7 @@ function showLeaksOnEnd() {
     hideFighterName();
     hideSeason();
     abfrage = "leaksonend";
+    parseUrl(abfrage);
 }
 function showUnitStatSheet() {
     showStatsPage();
@@ -767,8 +848,9 @@ function showUnitStatSheet() {
     hideInputs();
     hideElo();
     hideFighterName();
-    abfrage = "unitstatssheet";
+    abfrage = "fighterstatsheet";
     queryAllFighters();
+    parseUrl(abfrage);
 }
 
 function showGameEndingWaves() {
@@ -781,6 +863,7 @@ function showGameEndingWaves() {
     hideFighterName();
     hideSeason();
     abfrage = "gameendingwave";
+    parseUrl(abfrage);
 }
 
 
@@ -792,6 +875,7 @@ function showFighterStats() {
     showGameType();
     hideSeason();
     abfrage = "fighterstats";
+    parseUrl(abfrage);
 }
 
 function showGamesPerDay(){
@@ -803,7 +887,17 @@ function showGamesPerDay(){
     hideFighterName();
     showSeason();
     abfrage="gamesperday";
+    parseUrl(abfrage);
 
+}
+
+function showEloDistribution(data) {
+    hideLoad();
+    hideInputs();
+    showStatsPage();
+    createLineGraph(data);
+    abfrage="elodistribution";
+    parseUrl(abfrage);
 }
 
 function showSeason(){
@@ -921,13 +1015,13 @@ function createTable(data) {
         var dps = 0.00;
         var value = 0.00;
         var health = 0.00;
-        if (allFighters[i].totalvalue != null) value = allFighters[i].totalvalue;
+        if (allFighters[i].totalValue != null) value = allFighters[i].totalValue;
         else value = 0;
         if (allFighters[i].dps != null) dps = allFighters[i].dps;
         else dps = 0;
-        if (allFighters[i].health != null) health = allFighters[i].health;
+        if (allFighters[i].hp != null) health = allFighters[i].hp;
         else health = 0;
-        if (allFighters[i].goldcost != null) goldcost = allFighters[i].goldcost;
+        if (allFighters[i].goldCost != null) goldcost = allFighters[i].goldCost;
         else goldcost = 0;
         switch (wave) {
             case "1":
@@ -1018,7 +1112,7 @@ function createTable(data) {
                 break;
         }
         // scale dps to wave
-        switch (allFighters[i].attacktype) {
+        switch (allFighters[i].attackType) {
             case "Pierce":
                 if (wave_def == "Arcane") {
                     dps = dps * 1.15;
@@ -1064,7 +1158,7 @@ function createTable(data) {
             case "Pure":
                 break;
         }
-        switch (allFighters[i].armortype) {
+        switch (allFighters[i].armorType) {
             case "Fortified":
                 if (wave_att == "Pierce") {
                     health = health * 1.2;
@@ -1109,30 +1203,11 @@ function createTable(data) {
         }
         var dpspergold = (dps / value).toFixed(2);
         var healthpergold = (health / value).toFixed(2);
-        var legion = "";
-        switch (allFighters[i].legion[0]) {
-            case "element_legion_id":
-                legion = "Element";
-                break;
-            case "grove_legion_id":
-                legion = "Grove";
-                break;
-            case "mech_legion_id":
-                legion = "Mech";
-                break;
-            case "forsaken_legion_id":
-                legion = "Forsaken";
-                break;
-            case "atlantean_legion_id":
-                legion = "Atlantean";
-                break;
-
-
-        }
+        
         cell[0] = row.insertCell(0);
         cell[0].innerHTML = "<a href='/units?unit=" + allFighters[i].name + "'> " + allFighters[i].name+"</a>";
         cell[1] = row.insertCell(1);
-        cell[1].innerHTML = legion;
+        cell[1].innerHTML = allFighters[i].legion;
         cell[2] = row.insertCell(2);
         cell[2].innerHTML = goldcost;
         cell[3] = row.insertCell(3);
@@ -1142,9 +1217,9 @@ function createTable(data) {
         cell[5] = row.insertCell(5);
         cell[5].innerHTML = dps.toFixed(2);
         cell[6] = row.insertCell(6);
-        cell[6].innerHTML = allFighters[i].attacktype;
+        cell[6].innerHTML = allFighters[i].attackType;
         cell[7] = row.insertCell(7);
-        cell[7].innerHTML = allFighters[i].armortype;
+        cell[7].innerHTML = allFighters[i].armorType;
         cell[8] = row.insertCell(8);
         cell[8].innerHTML = allFighters[i].abilities.length;
         cell[9] = row.insertCell(9);

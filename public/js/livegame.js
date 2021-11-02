@@ -1,3 +1,9 @@
+/*
+Author: GvR Mr Mister / Shoro2
+ltdstats.com/livegame
+*/
+var debug = true;
+
 //globals
 var selectedPlayerName = "";
 var duoWest = false, duoEast = false;
@@ -43,23 +49,23 @@ function parsePlayers() {
     document.getElementById("mitte").style.display = "none";
     parsedPlayer = [];
     playercount = allPlayers.length;
-    console.log(playercount);
+    if(debug) console.log(playercount);
     gametype ="";
     if(playercount==4) gametype = "normal";
     else gametype = "classic";
-    console.log(allPlayers);
-    console.log(livegame.players);
-    console.log(parsedPlayer);
+    if(debug) console.log(allPlayers);
+    if(debug) console.log(livegame.players);
+    if(debug) console.log(parsedPlayer);
     for (var i = 0; i < playercount; i++) {
-        console.log(allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === livegame.players[i];})[0]);
+        if(debug) console.log(allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === livegame.players[i];})[0]);
         parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === livegame.players[i];})[0];
         if (parsedPlayer[i] === undefined) {
             parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name === "Bot (player not found)"; })[0];
         }
-        //console.log(parsedPlayer[i]);
+        //if(debug) console.log(parsedPlayer[i]);
     }
     var score_worker = [0, 0, 0, 0, 0, 0, 0, 0], score_value = [0, 0, 0, 0, 0, 0, 0, 0], game_count = [0, 0, 0, 0, 0, 0, 0, 0];
-    console.log(parsedPlayer);
+    if(debug) console.log(parsedPlayer);
     for (i = 0; i < playercount; i++) {
         if(playercount==4) gametype = "normal";
         else gametype = "classic";
@@ -83,7 +89,7 @@ function parsePlayers() {
         player_quits = parsedPlayer[i].statistics.quits;
         if (typeof parsedPlayer[i].statistics.quits == 'undefined') player_quits = 0;
         player_overall_elo = parsedPlayer[i].statistics.overallElo;
-        //console.log(parsedPlayer[i].statistics.overallPeakElo);
+        //if(debug) console.log(parsedPlayer[i].statistics.overallPeakElo);
         if (typeof parsedPlayer[i].statistics.overallPeakElo == 'undefined') player_overall_peakelo = parsedPlayer[i].statistics.overallPeakEloThisSeason;
         else player_overall_peakelo = parsedPlayer[i].statistics.overallPeakElo;
         player_overall_xp = parsedPlayer[i].statistics.totalXp
@@ -119,7 +125,7 @@ function parsePlayers() {
                 if(ele.gameDetails.length == 4) gametype = "normal";
                 else gametype="classic";
                 game_count[i]++;
-                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername; })[0];
+                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playerProfile.name == parsedPlayer[i].name; })[0];
                 var gameDetail_position = 0;
                 if (gameDetail) {
                     games_count++;
@@ -158,7 +164,7 @@ function parsePlayers() {
                         }
                     }
                     else{
-                        console.log(ele);
+                        if(debug) console.log(ele);
                         switch (gameDetail_position) {
                             case 1:
                                 gameDetailSelected[0] = gameDetail;
@@ -256,7 +262,7 @@ function parsePlayers() {
                                 workersPerWave[e].push(wpw);
                             });
                         }
-                        //console.log(workersPerWave);
+                        //if(debug) console.log(workersPerWave);
                         for (var q = 0; q < workersPerWave[0].length; q++) {
                             switch (gameDetail_position) {
                                 case 1:
@@ -297,7 +303,7 @@ function parsePlayers() {
                             }
     
                         }
-                        //console.log(workersPerWave);
+                        //if(debug) console.log(workersPerWave);
                         score_worker[i] = score_worker[i] / workersPerWave[0].length;
     
     
@@ -308,7 +314,7 @@ function parsePlayers() {
                         }
                         var valuec;
                         for (e = 0; e < 4; e++) {
-                            //console.log(gameDetailSelected[e].unitsPerWave);
+                            //if(debug) console.log(gameDetailSelected[e].unitsPerWave);
                             gameDetailSelected[e].unitsPerWave.forEach(function (ele) {
                                 valuec = 0;
                                 ele.forEach(function (ele2) {
@@ -325,7 +331,7 @@ function parsePlayers() {
                                 valuePerWave[e].push(valuec);
                             });
                         }
-                        //console.log(valuePerWave);
+                        //if(debug) console.log(valuePerWave);
                         for (q = 0; q < valuePerWave[0].length; q++) {
                             switch (gameDetail_position) {
                                 case 1:
@@ -363,20 +369,20 @@ function parsePlayers() {
                             }
                         }
                         score_value[i] = score_value[i] / valuePerWave[0].length;
-                        //console.log(valuePerWave);
+                        //if(debug) console.log(valuePerWave);
                     }
                     else{
                         var workersPerWave = [];
                         for (var e = 0; e < 8; e++) {
                             workersPerWave[e] = [];
                         }
-                        console.log(gameDetailSelected);
+                        if(debug) console.log(gameDetailSelected);
                         for (e = 0; e < 8; e++) {
                             gameDetailSelected[e].workersPerWave.forEach(function (wpw) {
                                 workersPerWave[e].push(wpw);
                             });
                         }
-                        //console.log(workersPerWave);
+                        //if(debug) console.log(workersPerWave);
                         for (var q = 0; q < workersPerWave[0].length; q++) {
                             switch (gameDetail_position) {
                                 case 1:
@@ -513,7 +519,7 @@ function parsePlayers() {
                             }
     
                         }
-                        //console.log(workersPerWave);
+                        //if(debug) console.log(workersPerWave);
                         score_worker[i] = score_worker[i] / workersPerWave[0].length;
     
     
@@ -524,7 +530,7 @@ function parsePlayers() {
                         }
                         var valuec;
                         for (e = 0; e < 4; e++) {
-                            //console.log(gameDetailSelected[e].unitsPerWave);
+                            //if(debug) console.log(gameDetailSelected[e].unitsPerWave);
                             gameDetailSelected[e].unitsPerWave.forEach(function (ele) {
                                 valuec = 0;
                                 ele.forEach(function (ele2) {
@@ -541,7 +547,7 @@ function parsePlayers() {
                                 valuePerWave[e].push(valuec);
                             });
                         }
-                        //console.log(valuePerWave);
+                        //if(debug) console.log(valuePerWave);
                         for (q = 0; q < valuePerWave[0].length; q++) {
                             switch (gameDetail_position) {
                                 case 1:
@@ -678,7 +684,7 @@ function parsePlayers() {
                                 }
                             }
                         score_value[i] = score_value[i] / valuePerWave[0].length;
-                        //console.log(valuePerWave);
+                        //if(debug) console.log(valuePerWave);
                     }
 
 
@@ -694,9 +700,9 @@ function parsePlayers() {
                                         //unit matching?
                                         if (favunit[x].includes(element.substring(0, element.indexOf("_unit")))) {
                                             anzahl = parseInt(favunit[x].substring(favunit[x].indexOf(";") + 1));
-                                            //console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
+                                            //if(debug) console.log(favunit[x].substring(favunit[x].indexOf(";") + 1));
                                             anzahl++;
-                                            //console.log(element);
+                                            //if(debug) console.log(element);
                                             favunit[x] = element.substring(0, element.indexOf("_unit")) + ";" + anzahl;
                                         }
                                     }
@@ -777,13 +783,13 @@ function parsePlayers() {
         if (parsedPlayer[i].games === null) {
             parsedPlayer[i].games.games.forEach(function (ele) {
                 var gamesWithFav_bool = false;
-                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == parsedPlayer[i].playername })[0];
+                var gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playerProfile.name == parsedPlayer[i].name })[0];
                 if (gameDetail) {
                     for (var x = 0; x < gameDetail.leaksPerWave.length; x++) {
-                        //console.log(gameDetail.leaksPerWave[x]);
+                        //if(debug) console.log(gameDetail.leaksPerWave[x]);
                         var leaked = false;
                         gameDetail.unitsPerWave[x].forEach(function (element) {
-                            //console.log(favunit);
+                            //if(debug) console.log(favunit);
                             try {
                                 favunit.forEach(function (favele) {
                                     if (favele != 0) {
@@ -814,8 +820,7 @@ function parsePlayers() {
         }
         
 
-        //console.log(favunit);
-        //console.log(favunit);
+        //if(debug) console.log(favunit);
         for (var x = 0; x < favunit.length; x++) {
             if (favunit[x] != 0) {
                 try {
@@ -838,13 +843,13 @@ function parsePlayers() {
                             url = "/img/icons/MPS";
                     }
                     url += ".png";
-                    //console.log(unit, count);
-                    //console.log(parsedPlayer[i].playername);
+                    //if(debug) console.log(unit, count);
+                    //if(debug) console.log(parsedPlayer[i].playername);
                     if(i>=2 && gametype=="normal"){
-                        document.getElementById("favstart" + (i + 3)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 3) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                        document.getElementById("favstart" + (i + 3)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 3) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].name + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
                     }
                     else{
-                        document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].playername + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
+                        document.getElementById("favstart" + (i + 1)).innerHTML += "<div class='favunits_div' id='favstart_li" + (i + 1) + x + "' onclick='getFighterGames(\"" + unit + "\",\"" + parsedPlayer[i].name + "\")'><img class='unitimg' src=" + url + ">" + unit_type + "(" + chance + "%)</div>";
                     }
                     
                     //document.getElementById("unitselector"+i).options[x] = new Option(unit_type,unit_type);
@@ -867,9 +872,9 @@ function parsePlayers() {
     try {
         for (i = 0; i < 4; i++) {
             if (parsedPlayer[i].bestFriends !== undefined) {
-                //console.log(parsedPlayer[i].bestFriends);
+                //if(debug) console.log(parsedPlayer[i].bestFriends);
                 for (var e = 0; e < parsedPlayer[i].bestFriends.length; e++) {
-                    //console.log(parsedPlayer[i].bestFriends[e]);
+                    //if(debug) console.log(parsedPlayer[i].bestFriends[e]);
                     friends[i][e] = parsedPlayer[i].bestFriends[e].player.name;
                 }
             }
@@ -881,7 +886,7 @@ function parsePlayers() {
     // TODO ADD CLASSIC
     var meinCounter = 0;
     friends.forEach(function (ele) {
-        //console.log(ele);
+        //if(debug) console.log(ele);
         if ((meinCounter === 0 || meinCounter === 1) && (ele.includes(parsedPlayer[0].name) || ele.includes(parsedPlayer[1].name))) {
             //west duo
             duoWest = true;
@@ -900,7 +905,7 @@ function parsePlayers() {
         document.getElementById("name5").innerHTML += " (friends)";
         document.getElementById("name6").innerHTML += " (friends)";
     }
-    //console.log(duoWest + ", " + duoEast);
+    //if(debug) console.log(duoWest + ", " + duoEast);
     //add win/loses indicator
     try {
         for (i = 0; i < parsedPlayer.length; i++) {
@@ -917,8 +922,8 @@ function parsePlayers() {
                 if (parsedPlayer[i].games.games[e] !== undefined) {
                     if(i>=2 && gametype=="normal"){
                         var gameDetail = parsedPlayer[i].games.games[e].gameDetails.filter(function (gameDetail) { return gameDetail.playerProfile.name === parsedPlayer[i].name; })[0];
-                        if (gameDetail.gameresult === "won") document.getElementById("gameresult" + (i + 3)).innerHTML += "W";
-                        else if (gameDetail.gameresult === "tied") document.getElementById("gameresult" + (i + 3)).innerHTML += "T";
+                        if (gameDetail.gameResult === "won") document.getElementById("gameresult" + (i + 3)).innerHTML += "W";
+                        else if (gameDetail.gameResult === "tied") document.getElementById("gameresult" + (i + 3)).innerHTML += "T";
                         else {
                             document.getElementById("gameresult" + (i + 3)).innerHTML += "L";
                             winsFive[i]--;
@@ -989,12 +994,6 @@ function parsePlayers() {
         
 
     }
-    /*
-    console.log(game_count);
-    console.log(score_worker);
-    console.log(score_value);
-    */
-
     getWinchance();
 }
 
@@ -1042,11 +1041,13 @@ function getFighterGames(fightername, playername) {
         leaks[i] = 0;
     }
     var fightercount_pick = 0;
-    //console.log(parsedPlayer);
-    var selectedPlayer = parsedPlayer.filter(function (filterGames) { return filterGames.playername == playername })[0];
+    if(debug) console.log(playername);
+    if(debug) console.log(parsedPlayer);
+    var selectedPlayer = parsedPlayer.filter(function (filterGames) { return filterGames.name == playername })[0];
+    if(debug) console.log(selectedPlayer);
     var selectedGames = selectedPlayer.games.games;
     selectedGames.forEach(function (ele) {
-        gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playername == playername })[0];
+        gameDetail = ele['gameDetails'].filter(function (gameDetail) { return gameDetail.playerProfile.name == playername })[0];
         if (typeof gameDetail !== "undefined") {
             if (typeof gameDetail.unitsPerWave[0] !== "undefined") {
                 //check units on 1
@@ -1117,10 +1118,10 @@ function getFighterGames(fightername, playername) {
             }
         }
     });
-
+    if(debug) console.log(leaks);
     var spot = 0;
     for (var i = 0; i < playercount; i++) {
-        if (parsedPlayer[i].playername == playername) {
+        if (parsedPlayer[i].name == playername) {
             spot = i + 1;
         }
     }
@@ -1147,7 +1148,7 @@ function getWinchance() {
     var peakElos = [];
     var bonus_w = 0; bonus_e = 0;
     for (var i = 0; i < parsedPlayer.length; i++) {
-        //console.log(parsedPlayer[i]);
+        //if(debug) console.log(parsedPlayer[i]);
         if (parsedPlayer[i].statistics.overallElo !== undefined) elos.push(parsedPlayer[i].statistics.overallElo);
         else elos.push(1000);
         if (parsedPlayer[i].statistics.overallPeakEloThisSeason !== undefined) peakElos.push(parsedPlayer[i].statistics.overallPeakEloThisSeason);
@@ -1205,10 +1206,10 @@ function showPlayerDetails(nummer) {
     parsedPlayer = [];
     if(livegame.players.length == 4 && nummer >= 2) nummer=nummer-2;
     for (var i = 0; i < livegame.players.length; i++) {
-        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.playername == livegame.players[i] })[0];
+        parsedPlayer[i] = allPlayers.filter(function (filteredPlayer) { return filteredPlayer.name == livegame.players[i] })[0];
     }
-    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].playername + "' Season 5 Stats (<a href='/profile?player=" + parsedPlayer[nummer].playername + "' target='_blank'>Profile</a>)</h3>";
-    selectedPlayerName = parsedPlayer[nummer].playername;
+    details_content.innerHTML += "<h3>" + parsedPlayer[nummer].name + "' Season 8 Stats (<a href='/profile?player=" + parsedPlayer[nummer].name + "' target='_blank'>Profile</a>)</h3>";
+    selectedPlayerName = parsedPlayer[nummer].name;
     queryPlayerGames(selectedPlayerName);
 }
 
@@ -1227,7 +1228,7 @@ function showLivegame(name) {
 function listGames(livegames) {
     var classiccontainer = document.getElementById("classicgames");
     var normalcontainer = document.getElementById("normalgames");
-    //console.log(livegames);
+    //if(debug) console.log(livegames);
     if (livegames) {
         var counter_r = 0, counter_c = 0;
         for (var i = livegames.length - 1; i > -1; i--) {
@@ -1242,13 +1243,43 @@ function listGames(livegames) {
             else minutes_str = minutes.toString();
             if (seconds.toString().length < 2) seconds_str = "0" + minutes;
             else seconds_str = seconds.toString();
-            //console.log(currgame);
+            //if(debug) console.log(currgame);
             if (currgame.gametype === "classic") {
-                classiccontainer.innerHTML += "<div class='game_row_4v4' onclick='showLivegame(\"" + currgame.players[0] + "\")'><b>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b>" + currgame.players[1] + "</b>(" + currgame.elos[1] + "), <b>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") VS <b>" + currgame.players[4] + "</b>(" + currgame.elos[4] + "), <b>" + currgame.players[5] + "</b>(" + currgame.elos[5] + "), <b>" + currgame.players[6] + "</b>(" + currgame.elos[6] + "), <b>" + currgame.players[7] + "</b>(" + currgame.elos[7] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                classiccontainer.innerHTML += 
+                "<div class='game_row_4v4' onclick='showLivegame(\"" + currgame.players[0] + "\")'>" +
+                    "<b><div class='teamwest'>" + 
+                        "<div class='playerlist4'>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b> </div>" +
+                        "<div class='playerlist4'>" + currgame.players[1] + "</b>(" + currgame.elos[1] + "), <b> </div>" + 
+                        "<div class='playerlist4'>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b> </div>" + 
+                        "<div class='playerlist4'>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") </div>" + 
+                    "</div>" +
+                    "<div class='midvs'>"
+                        + minutes_str + ":" + seconds_str +
+                    "</div>"+
+                    "<div class='teameast'><b>" + 
+                        "<div class='playerlist4'>" + currgame.players[4] + "</b>(" + currgame.elos[4] + "), <b> </div>" + 
+                        "<div class='playerlist4'>" + currgame.players[5] + "</b>(" + currgame.elos[5] + "), <b> </div>" + 
+                        "<div class='playerlist4'>" + currgame.players[6] + "</b>(" + currgame.elos[6] + "), <b> </div>" + 
+                        "<div class='playerlist4'>" + currgame.players[7] + "</b>(" + currgame.elos[7] + ") </div>" + 
+                    "</div>" +
+                "</div><br>"
                 counter_c++;
             }
             else {
-                normalcontainer.innerHTML += "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'><b>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b>" + currgame.players[1] + "</b>(" + currgame.elos[1] + ")  VS <b>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") " + minutes_str + ":" + seconds_str + " </div><br>";
+                normalcontainer.innerHTML += 
+                "<div class='game_row'  onclick='showLivegame(\"" + currgame.players[0] + "\")'><b>" +
+                    "<div class='teamwest'>" +
+                        "<div class='playerlist2'>" + currgame.players[0] + "</b>(" + currgame.elos[0] + "), <b> </div>" + 
+                        "<div class='playerlist2'>" + currgame.players[1] + "</b>(" + currgame.elos[1] + ") </div>" +
+                    "</div>" +
+                    "<div class='midvs'>" + 
+                        minutes_str + ":" + seconds_str + 
+                    "</div>" +
+                    "<div class='teameast'><b>" + 
+                        "<div class='playerlist2'>" + currgame.players[2] + "</b>(" + currgame.elos[2] + "), <b> </div>" + 
+                        "<div class='playerlist2'>" + currgame.players[3] + "</b>(" + currgame.elos[3] + ") </div>"+
+                    "</div>"+
+                "</div><br>";
                 counter_r++;
             }
 
@@ -1322,12 +1353,30 @@ function queryPlayer(playername) {
     }, playername);
 }
 
+function switchListView(){
+    var classiccontainer = document.getElementById("classicgames");
+    var normalcontainer = document.getElementById("normalgames");
+
+    var indermitte = document.getElementById("indermitte");
+    //normal active
+    if(normalcontainer.style.display==""){
+        classiccontainer.style.display="";
+        normalcontainer.style.display="none";
+        indermitte.style.width="90%";
+    }
+    else{
+        classiccontainer.style.display="none";
+        normalcontainer.style.display="";
+        indermitte.style.width="80%";
+    }
+}
+
 function getAllLivegames(callback) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var livegames = JSON.parse(xhttp.response);
-            //console.log(livegames);
+            //if(debug) console.log(livegames);
             callback(livegames);
         }
         else if (this.status === 500) document.getElementById("apierror").style.display = "";
@@ -1370,7 +1419,7 @@ function queryLivegame(playername) {
     document.getElementById("loadingstring").innerHTML = "Requesting Livegame...";
     sqlGetLivegame(function (result) {
         livegame = JSON.parse(result);
-        //console.log(livegame);
+        //if(debug) console.log(livegame);
         if (livegame) {
             livegame.players.forEach(function (ele) {
                 queryPlayer(ele);

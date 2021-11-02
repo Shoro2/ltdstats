@@ -4,9 +4,13 @@ function getGameDetails(games) {
     firsttime = true;
     try {
         meinString = games.gameDetails.filter(meinString => meinString.position === 1)[0];
+        meinString.endingWave = games.endingWave;
         meinString1 = games.gameDetails.filter(meinString => meinString.position === 2)[0];
+        meinString1.endingWave = games.endingWave;
         meinString2 = games.gameDetails.filter(meinString => meinString.position === 5)[0];
+        meinString2.endingWave = games.endingWave;
         meinString3 = games.gameDetails.filter(meinString => meinString.position === 6)[0];
+        meinString3.endingWave = games.endingWave;
         gameEvent = [meinString, meinString1, meinString2, meinString3];
         fillNames();
         waveAnzeigen();
@@ -111,7 +115,7 @@ function fillNames() {
         });
         var networth = unit_value;
         var player_legion = gameEvent[i - 1].legion;
-        document.getElementById("p" + i + "_name").innerText = gameEvent[i - 1].playername;
+        document.getElementById("p" + i + "_name").innerText = gameEvent[i - 1].playerProfile.name;
         document.getElementById("networth" + i).innerText = "(" + networth + "/";
         document.getElementById("worker" + i).innerText = worker + ")";
         document.getElementById("legion" + i).innerHTML = "<img id='img_legion' src='/img/icons/" + player_legion + ".png'>";
@@ -131,10 +135,10 @@ function setKingHp() {
         var wave = parseInt(document.getElementById("slider").value);
         var kinghp1 = document.getElementById("hpwest");
         var kinghp2 = document.getElementById("hpeast");
-        kinghp1.style.width = game.leftkingpercenthp[wave - 1] * 100 + "%";
-        kinghp2.style.width = game.rightkingpercenthp[wave - 1] * 100 + "%";
-        kinghp1.textContent = (game.leftkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
-        kinghp2.textContent = (game.rightkingpercenthp[wave - 1] * 100).toFixed(2) + "%";
+        kinghp1.style.width = game.leftKingPercentHP[wave - 1] * 100 + "%";
+        kinghp2.style.width = game.rightKingPercentHP[wave - 1] * 100 + "%";
+        kinghp1.textContent = (game.leftKingPercentHP[wave - 1] * 100).toFixed(2) + "%";
+        kinghp2.textContent = (game.rightKingPercentHP[wave - 1] * 100).toFixed(2) + "%";
     }
     catch(error){
         console.log(error);
@@ -229,11 +233,11 @@ document.onkeydown = function (event) {
         if (event.target.id === "playername") setPlayer();
     }
     if (event.keyCode === 107) {
-        if (document.getElementById("slider").value < gameEvent[0].wave) {
+        if (document.getElementById("slider").value < gameEvent[0].endingWave) {
             var waveValue = parseInt(document.getElementById("slider").value) + 1;
             document.getElementById("slider").value = waveValue;
         }
-        else if (document.getElementById("slider").value === gameEvent[0].wave) {
+        else if (document.getElementById("slider").value === gameEvent[0].endingWave) {
             document.getElementById("slider").value = "1";
         }
         waveAnzeigen();
@@ -244,7 +248,7 @@ document.onkeydown = function (event) {
         }
 
         else if (document.getElementById("slider").value === "1") {
-            document.getElementById("slider").value = gameEvent[0].wave;
+            document.getElementById("slider").value = gameEvent[0].endingWave;
         }
         waveAnzeigen();
     }
@@ -257,11 +261,11 @@ document.onmousewheel = function displaywheel(e) {
         var evt = window.event || e; //equalize event object
         var delta = evt.detail ? evt.detail * -120 : evt.wheelDelta; //check for detail first so Opera uses that instead of wheelDelta
         if (delta > 0) {
-            if (document.getElementById("slider").value < gameEvent[0].wave) {
+            if (document.getElementById("slider").value < gameEvent[0].endingWave) {
                 var waveValue = parseInt(document.getElementById("slider").value) + 1;
                 document.getElementById("slider").value = waveValue;
             }
-            else if (document.getElementById("slider").value === gameEvent[0].wave) {
+            else if (document.getElementById("slider").value === gameEvent[0].endingWave) {
                 document.getElementById("slider").value = "1";
             }
             waveAnzeigen();
@@ -272,15 +276,15 @@ document.onmousewheel = function displaywheel(e) {
             }
 
             else if (document.getElementById("slider").value === "1") {
-                document.getElementById("slider").value = gameEvent[0].wave;
+                document.getElementById("slider").value = gameEvent[0].endingWave;
             }
             waveAnzeigen();
         }
     }
 };
 document.getElementById("slider").onchange = function () {
-    if (document.getElementById("slider").value > gameEvent[0].wave) {
-        document.getElementById("slider").value = gameEvent[0].wave;
+    if (document.getElementById("slider").value > gameEvent[0].endingWave) {
+        document.getElementById("slider").value = gameEvent[0].endingWave;
         waveAnzeigen();
     }
 };
@@ -354,7 +358,7 @@ function clearSends() {
 function waveAnzeigen() {
 
     var welle = document.getElementById("slider").value;
-    var maxwave = gameEvent[0].wave;
+    var maxwave = gameEvent[0].endingWave;
     document.getElementById("wave").textContent = "Wave: " + welle.toString() + "/" + maxwave;
     //legion spell
     var icon_legionspell = [];
@@ -399,8 +403,8 @@ function showSelect() {
 function searchPlayers() {
     var selected = document.getElementById("legion_selector").value;
     if (selected !== "") {
-        document.getElementById("mitte").style.display = "inherit";
-        queryTopPlayer(selected);
+        //document.getElementById("mitte").style.display = "inherit";
+        //queryTopPlayer(selected);
     }
 }
 
@@ -432,7 +436,7 @@ function parseTopPlayer(players, legion) {
             break;
     }
     for (var i = 0; i < players.length; i++) {
-        result.innerHTML += "<br> <div id='player_" + i + "' onclick='showGames(" + i + ", " + legion_num + ")'>" + players[i].playername + " Elo: " + players[i].statistics.overallElo + "</div>";
+        result.innerHTML += "<br> <div id='player_" + i + "' onclick='showGames(" + i + ", " + legion_num + ")'>" + players[i].name + " Elo: " + players[i].statistics.overallElo + "</div>";
     }
     result.innerHTML += "<br>";
     result.style.display = "inherit";
@@ -468,7 +472,7 @@ function showGames(nummer, legion) {
     for (var i = 0; i < players[nummer].filteredGamesQuery.games.length; i++) {
         if (players[nummer].filteredGamesQuery.games[i].legion === legion) {
             games_results++;
-            result.innerHTML += "<br> <div id='games_" + i + "' onclick='getGameId(" + i + ", " + nummer + ")'>" + players[nummer].filteredGamesQuery.games[i].game_id + " Legion: " + players[nummer].filteredGamesQuery.games[i].legion + ", " + players[nummer].filteredGamesQuery.games[i].gameresult + "</div>";
+            result.innerHTML += "<br> <div id='games_" + i + "' onclick='getGameId(" + i + ", " + nummer + ")'>" + players[nummer].filteredGamesQuery.games[i].id + " Legion: " + players[nummer].filteredGamesQuery.games[i].legion + ", " + players[nummer].filteredGamesQuery.games[i].gameresult + "</div>";
             if (games_results === 10) break;
         }
         
@@ -477,7 +481,7 @@ function showGames(nummer, legion) {
 }
 
 function getGameId(nummer, playernum) {
-    window.location.href = "/replay?gameid=" + players[playernum].filteredGamesQuery.games[nummer].game_id;
+    window.location.href = "/replay?gameid=" + players[playernum].filteredGamesQuery.games[nummer].id;
 }
 
 //adds thik lines to grid

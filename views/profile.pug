@@ -5,10 +5,11 @@ block content
     .tabmenu
         .tab_top_active#tab_top_1(onclick="javascript:openTab(1);") Overview
         .tab_top_active#tab_top_2(onclick="javascript:openTab(2);") Elograph
-        .tab_top_active#tab_top_3(onclick="javascript:openTab(3);") Games
+        .tab_top_active#tab_top_3(onclick="javascript:openTab(3);") Match History
         //.tab_top_active#tab_top_4(onclick="javascript:openTab(4);") Collection
-        .tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Builds
-        .tab_top_active#tab_top_6(onclick="javascript:openTab(6);") Stats
+        //.tab_top_active#tab_top_5(onclick="javascript:openTab(5);") Builds
+        //.tab_top_active#tab_top_6(onclick="javascript:openTab(6);") Stats
+        .tab_top_active#tab_top_7(onclick="javascript:openTab(7);") Playstyle
         .style(style='clear: both;')
         .tab_box#tab_box_1
             .profile
@@ -16,7 +17,11 @@ block content
                     script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
                     ins(class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2408139751926605" data-ad-slot="8367468970"  data-ad-format="auto" data-full-width-responsive="true")
                     script (adsbygoogle = window.adsbygoogle || []).push({});
+                #placeholder(style="margin-left:33%;width:33%;text-align:center;")
                     h4 Select a player
+                    .form-inline.my-2.my-lg-05
+                        input#playername2.form-control.mr-sm-2(type='text', placeholder='Search', aria-label='Search', style='margin-left:33%')
+                        button.btn.my-sm-0(onclick="setPlayer();") Search
                 #ingame Currently ingame 
                 #player_icon1
                 h1#player_name1
@@ -88,33 +93,8 @@ block content
                 .wrap.active
                     .content
                         b Game:
-                        select#setGame.form-control.mr-sm-2(type='text', onchange="drawGameDetails(0)")
+                        select#setGame.form-control.mr-sm-2(type='text', onchange="getGameDetails(this.value)")
                             option(value="0") Game
-                        #game_setWave
-                            b Wave:
-                            select#setWave.form-control.mr-sm-2(type='text', onchange="drawGameDetails(savedValue)")
-                                option(value="all") Game End
-                                option(value="1") 1
-                                option(value="2") 2
-                                option(value="3") 3
-                                option(value="4") 4
-                                option(value="5") 5
-                                option(value="6") 6
-                                option(value="7") 7
-                                option(value="8") 8
-                                option(value="9") 9
-                                option(value="10") 10
-                                option(value="11") 11
-                                option(value="12") 12
-                                option(value="13") 13
-                                option(value="14") 14
-                                option(value="15") 15
-                                option(value="16") 16
-                                option(value="17") 17
-                                option(value="18") 18
-                                option(value="19") 19
-                                option(value="20") 20
-                                option(value="21") 21
                         <!-- players -->
                         b Summary:
                         #game_summary(style="text-align: center;")
@@ -129,7 +109,7 @@ block content
                                 tr
                                     th Name
                                     th Elo
-                                    th Legion
+                                    th MVP Score
                                     th Value
                                     th Worker
                                     th Income
@@ -137,7 +117,7 @@ block content
                                 tr#game_player1(onclick="javascript: getPlayerBuild(0);")
                                     td#name_1
                                     td#elo_1
-                                    td#legion_1
+                                    td#mvpscore_1
                                     td#value_1
                                     td#worker_1
                                     td#income_1
@@ -145,7 +125,7 @@ block content
                                 tr#game_player2(onclick="javascript: getPlayerBuild(1);")
                                     td#name_2
                                     td#elo_2
-                                    td#legion_2
+                                    td#mvpscore_2
                                     td#value_2
                                     td#worker_2
                                     td#income_2
@@ -155,7 +135,7 @@ block content
                                 tr#game_player3(onclick="javascript: getPlayerBuild(2);")
                                     td#name_3
                                     td#elo_3
-                                    td#legion_3
+                                    td#mvpscore_3
                                     td#value_3
                                     td#worker_3
                                     td#income_3
@@ -163,17 +143,11 @@ block content
                                 tr#game_player4(onclick="javascript: getPlayerBuild(3);")
                                     td#name_4
                                     td#elo_4
-                                    td#legion_4
+                                    td#mvpscore_4
                                     td#value_4
                                     td#worker_4
                                     td#income_4
                                     td#leaks_4
-                        b.gamedetails_schrift Build:
-                        b.gamedetails_schrift  Mercs sent:
-                        b.gamedetails_schrift  Mercs received:
-                        #gamedetails_build.gamedetails_kasten(onclick="showBuild();")
-                        #gamedetails_mercs_sent.gamedetails_kasten
-                        #gamedetails_mercs_received.gamedetails_kasten     
         .tab_box#tab_box_4
             .profile
                 h1 Not supported yet, sorry :(
@@ -181,38 +155,10 @@ block content
             .profile
                 .wrap.active
                         .content
-                            .mittig#selector Race:
+                            .mittig#selector Mode:
                                 select#setRace2.form-control.mr-sm-2.meinselect(type='text', onchange="drawPlayerBuilds(playerGames)")
-                                    option(value="Mastermind") Mastermind
-                                    option(value="Element") Element
-                                    option(value="Grove") Grove
-                                    option(value="Forsaken") Forsaken
-                                    option(value="Mech") Mech
-                                    option(value="Atlantean") Atlantean
-                                | Wave:
-
-                                select#setWave2.form-control.mr-sm-2.meinselect(onchange="drawPlayerBuilds(playerGames)")
-                                    option(value="1") 1
-                                    option(value="2") 2
-                                    option(value="3") 3
-                                    option(value="4") 4
-                                    option(value="5") 5
-                                    option(value="6") 6
-                                    option(value="7") 7
-                                    option(value="8") 8
-                                    option(value="9") 9
-                                    option(value="10") 10
-                                    option(value="11") 11
-                                    option(value="12") 12
-                                    option(value="13") 13
-                                    option(value="14") 14
-                                    option(value="15") 15
-                                    option(value="16") 16
-                                    option(value="17") 17
-                                    option(value="18") 18
-                                    option(value="19") 19
-                                    option(value="20") 20
-                                    option(value="21") 21
+                                    option(value="ranked") Ranked
+                                    option(value="classic") Classic
                             #filter(onclick="toggleFilters();") Hide Filters
                             h1#playername
                             #totalgames
@@ -266,33 +212,13 @@ block content
                                     canvas#myChart2
                         #helpwindow(onclick="hideHelpPage();", style="display:none;")
                             #helpcontent
+        .tab_box#tab_box_7
+            .profile
+                h3 coming soon
     script(src="/js/jquery.js")
     script(src="/js/tabmenu.js")
     script(src="/js/profile.js")
+    script(src="/js/unitstats.js")
     script(src="/js/profile_stats.js")
     script(src="/js/Chart.js")
-    script(src="/js/getGameDetails.js")
     script checkContent();openTab(1);
-    #divumtable.hidden
-        #showhide(onclick="showBuild();") Close
-            table#buildtable(onclick="showBuild();")
-                - for(var i=28;i>0;i--)
-                    tr(id=i, onclick="showBuild();")
-                        td(id=i+".1", class="pictable")
-                        td(id=i+".2", class="pictable")
-                        td(id=i+".3", class="pictable")
-                        td(id=i+".4", class="pictable")
-                        td(id=i+".5", class="pictable")
-                        td(id=i+".6", class="pictable")
-                        td(id=i+".7", class="pictable")
-                        td(id=i+".8", class="pictable")
-                        td(id=i+".9", class="pictable")
-                        td(id=i+".10", class="pictable")
-                        td(id=i+".11", class="pictable")
-                        td(id=i+".12", class="pictable")
-                        td(id=i+".13", class="pictable")
-                        td(id=i+".14", class="pictable")
-                        td(id=i+".15", class="pictable")
-                        td(id=i+".16", class="pictable")
-                        td(id=i+".17", class="pictable")
-                        td(id=i+".18", class="pictable")

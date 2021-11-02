@@ -1,14 +1,9 @@
 function convertGameToNew(input){
-    console.log("Game converter started.");
-    console.log("Input:");
-    console.log(input);
     //single/multiple games
     var output = [];
     if(input.length > 1){
-        console.log("Multiple games detected.");
         input.forEach(element => {
             if(element.gameid){
-                console.log("Converting game "+element.gameid+" into new format.");
                 element.id = element.gameid;
                 delete element.gameid;
                 element.endingWave = element.endingwave;
@@ -39,20 +34,15 @@ function convertGameToNew(input){
 
                 
             }
-            else if(element.id){
-                console.log("No convertig needed, using new shema.");
-            }
             output.push(element);
         });
     }
     else{
-        console.log("Single game detected.");
         if(input.ts > "2020-01-05"){
-            console.log("Converting game "+input.id+" into new format.")
+
+            //add single game convert
         }
-        else{
-            console.log("No convertig needed, using new shema.");
-        }
+
     }
     return output;
 }

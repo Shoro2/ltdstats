@@ -2,45 +2,114 @@ extend layout
 block content
     link(rel='stylesheet', href='/css/streams.css')
     .content
-        .card
+        .card(style="display:none;")
             h1 Featured Streams:
-            .left
-                h4 Twitch:
-                br
-                a(href="https://twitch.tv/lforward", target="blank")
-                    img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
-                    h5 LForward (LTD1&2)
-                br
-                a(href="https://twitch.tv/crazyltd", target="blank")
-                    img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
-                    h5 Crazy (LTD2)
-                br
-                a(href="https://twitch.tv/paintwhiff", target="blank")
-                    img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
-                    h5 paintsniffer (LTD2)
-                br
-                a(href="https://twitch.tv/Cynick97", target="blank")
-                    img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png" title="My name is Dan, I'm 22 and live in Great Britain. I play video games pretty much all day every day, at the moment mostly Legion TD 2, Apex Legends and Dota 2 Autochess. In the past I've played a lot of Rocket League, League of Legends, World of Warcraft and Path of Exile, as well as a bunch of other games. I try to stream every day from 6-7PM GMT until some time in the morning. Thanks for stopping by and I hope you enjoy the stream.")
-                    h5 Cynick97 (LTD2)
-                br
-                a(href="https://twitch.tv/fatestaycalm", target="blank")
-                    img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
-                    h5 Fatestaynight (LTD1)
-            .left
-                h4 Youtube:
-                br
-                a(href="https://www.youtube.com/channel/UCbDq6kFWwnKlO2jnpaMLePQ", target="blank")
-                    img.twitchicon(src="/img/icons/video.png")
-                    h5 Akitos
-                br
-                a(href="https://www.youtube.com/channel/UCjAHKTDHKYUh38ftkWvf5Gw", target="blank")
-                    img.twitchicon(src="/img/icons/video.png")
-                    h5 LForward
-                br
-                a(href="https://www.youtube.com/channel/UCSk0_KhLgt6BCcZfvVeCHug", target="blank")
-                    img.twitchicon(src="/img/icons/video.png")
-                    h5 Roshkatul
-                br
-                a(href="https://www.youtube.com/channel/UCOTqTXK_yC753PzNh1cogWw", target="blank")
-                    img.twitchicon(src="/img/icons/video.png")
-                    h5 Bonny
+            #filterbutton(onclick="showFilters();") Show Filters
+            #filterbox
+                .filter
+                    br 
+                    | Language
+                    select#sel_languages(name="languages", onchange="updateFilters();") 
+                        option(value="ALL" selected) All
+                        option(value="DE") GER 
+                        option(value="EN") ENG
+                        option(value="FR") FR
+                .filter
+                    br
+                    | Other Games
+                    select#sel_other(name="other", onchange="updateFilters();")
+                        option(value="ALL" selected) All
+                        option(value="YES") Yes
+                        option(value="NO") No
+                .filter
+                    br
+                    | Stream Type
+                    select#sel_type(name="type", onchange="updateFilters();")
+                        option(value="ALL" selected) All
+                        option(value="COMP") Competetive 
+                        option(value="EDU") Educational
+                        option(value="FUN") For fun
+                .filter
+                    br
+                    | Target Audience
+                    select#sel_target(name="target", onchange="updateFilters();")
+                        option(value="ALL" selected) All
+                        option(value="NEW") New Players
+                        option(value="MID") Normal
+                        option(value="PRO") Pros
+            .flexbox#flexbox
+                .flexitem 
+                    a(href="https://twitch.tv/ltd2", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Offical Legion TD 2
+                        iframe(src="https://player.twitch.tv/?channel=ltd2&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/danwulfe", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Danwolf
+                        iframe(src="https://player.twitch.tv/?channel=danwulfe&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/shadowings_", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Shadowings
+                        iframe(src="https://player.twitch.tv/?channel=shadowings_&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/hrdbonny", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png" title="My name is Dan, I'm 22 and live in Great Britain. I play video games pretty much all day every day, at the moment mostly Legion TD 2, Apex Legends and Dota 2 Autochess. In the past I've played a lot of Rocket League, League of Legends, World of Warcraft and Path of Exile, as well as a bunch of other games. I try to stream every day from 6-7PM GMT until some time in the morning. Thanks for stopping by and I hope you enjoy the stream.")
+                        h6 Bonny
+                        iframe(src="https://player.twitch.tv/?channel=hrdbonny&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/jamaaaa", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Jama
+                        iframe(src="https://player.twitch.tv/?channel=jamaaaa&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/yoggyogg", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 YoggYogg
+                        iframe(src="https://player.twitch.tv/?channel=yoggyogg&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/sugarsaltpepper", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 SSP
+                        iframe(src="https://player.twitch.tv/?channel=sugarsaltpepper&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/pennywiseuk", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Pennywise
+                        iframe(src="https://player.twitch.tv/?channel=pennywiseuk&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/deviltango", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Deviltango
+                        iframe(src="https://player.twitch.tv/?channel=deviltango&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/amsterdaams", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Amsterdaams
+                        iframe(src="https://player.twitch.tv/?channel=amsterdaams&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/widderson", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Widderson
+                        iframe(src="https://player.twitch.tv/?channel=widderson&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/flight_tv", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Flight TV
+                        iframe(src="https://player.twitch.tv/?channel=flight_tv&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/kingdanzz", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Kingdanzz
+                        iframe(src="https://player.twitch.tv/?channel=kingdanzz&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://twitch.tv/julian2468", target="blank")
+                        img.twitchicon(src="/img/icons/GlitchBadge_Purple_24px.png")
+                        h6 Bernd das BROT
+                        iframe(src="https://player.twitch.tv/?channel=julian2468&parent=www.ltdstats.com&autoplay=false", frameborder="0", allow="fullscreen" title="Twitch" sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" scrolling="no")
+                .flexitem 
+                    a(href="https://www.youtube.com/channel/UCOTqTXK_yC753PzNh1cogWw", target="blank")
+                        img.twitchicon(src="/img/icons/video.png")
+                        h6 Bonny
+    script(src="/js/streams.js")

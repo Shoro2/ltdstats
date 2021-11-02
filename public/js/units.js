@@ -293,7 +293,7 @@ function scanUnits() {
                 var unit_type = "Azeria";
                 break;
             case "priestess_of_the_abyss":
-                var url = "/img/icons/PriestessoftheAbyss.png";
+                var url = "/img/icons/PriestessOfTheAbyss.png";
                 var unit_type = "Priestess%20of%20the%20Abyss";
                 break;
             case "eggsack":
@@ -415,43 +415,12 @@ function draw(myUnit) {
     wrapper = document.getElementsByClassName("wrap")[0];
     if (wrapper.classList.contains("active") === false) wrapper.classList.toggle("active");
     document.getElementById("unit_name").textContent = fighter.name;
-    switch (fighter.legion[0]) {
-        case "element_legion_id":
-            fighter.legion = "Element";
-            break;
-        case "forsaken_legion_id":
-            fighter.legion = "Forsaken";
-            break;
-        case "grove_legion_id":
-            fighter.legion = "Grove";
-            break;
-        case "mech_legion_id":
-            fighter.legion = "Mech";
-            break;
-        case "atlantean_legion_id":
-            fighter.legion = "Atlantean";
-            break;
-        case "nether_legion_id":
-            fighter.legion = "Mercenary";
-            break;
-        case "creature_legion_id":
-            fighter.legion = "Creature";
-            break;
-        case "nomad_legion_id":
-            fighter.legion = "Nomad";
-            break;
-        case "aspect_legion_id":
-            fighter.legion = "Other";
-            break;
-        default:
-            break;
-    }
     document.getElementById("unit_legion").innerHTML = "Legion: " + fighter.legion;
-    document.getElementById("unit_icon").src = "/img/i" + fighter.iconpath.substring(1);
-    document.getElementById("unit_health").innerHTML = "<img class='statpic' src='/img/icons/Health.png'> Health: " + fighter.health;
-    document.getElementById("unit_attackspeed").innerHTML = "<img class='statpic' src='/img/icons/AttackSpeedDecal.png> Attackspeed: " + fighter.attackspeed;
-    document.getElementById("unit_attacktype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.attacktype + ".png'> Attack Type: " + fighter.attacktype;
-    document.getElementById("unit_defensetype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.armortype + ".png'> Armor Type: " + fighter.armortype;
+    document.getElementById("unit_icon").src = "/img/i" + fighter.iconPath.substring(1);
+    document.getElementById("unit_health").innerHTML = "<img class='statpic' src='/img/icons/Health.png'> Health: " + fighter.hp;
+    document.getElementById("unit_attackspeed").innerHTML = "<img class='statpic' src='/img/icons/AttackSpeedDecal.png> Attackspeed: " + fighter.attackSpeed;
+    document.getElementById("unit_attacktype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.attackType + ".png'> Attack Type: " + fighter.attackType;
+    document.getElementById("unit_defensetype").innerHTML = "<img class='statpic' src='/img/icons/" + fighter.armorType + ".png'> Armor Type: " + fighter.armorType;
 
     document.getElementById("unit_dps").innerHTML = "<img class='statpic' src='/img/icons/Damage.png'> DPS: " + fighter.dps;
     document.getElementById("unit_range").innerHTML = "<img class='statpic' src='/img/icons/Range.png'> Range: " + fighter.range;
@@ -459,8 +428,8 @@ function draw(myUnit) {
     console.log(fighter.legion);
     if (fighter.legion !== "Mercenary" && fighter.legion !== "Creature") {
         console.log("gold");
-        document.getElementById("unit_goldcost").innerHTML = "<img class='statpic' src='/img/icons/Gold_Currency.png'> Goldcost: " + fighter.goldcost;
-        document.getElementById("unit_totalcost").innerHTML = "<img class='statpic' src='/img/icons/value.png'> Total Value: " + fighter.totalvalue;
+        document.getElementById("unit_goldcost").innerHTML = "<img class='statpic' src='/img/icons/Gold_Currency.png'> Goldcost: " + fighter.goldCost;
+        document.getElementById("unit_totalcost").innerHTML = "<img class='statpic' src='/img/icons/value.png'> Total Value: " + fighter.totalValue;
     }
     else {
         //mercs&creatures
@@ -480,9 +449,9 @@ function draw(myUnit) {
     }
     document.getElementById("unit_abilities").innerHTML += "</ul>";
     document.getElementById("unit_upgrades").innerHTML = "Upgrades to: <ul>";
-    if (fighter.upgradesto.length > 0) {
-        for (i = 0; i < fighter.upgradesto.length; i++) {
-            var upgrade_name = fighter.upgradesto[i].substring(0, fighter.upgradesto[i].indexOf("_unit")).replace("_", " ");
+    if (fighter.upgradesTo.length > 0) {
+        for (i = 0; i < fighter.upgradesTo.length; i++) {
+            var upgrade_name = fighter.upgradesTo[i].substring(0, fighter.upgradesTo[i].indexOf("_unit")).replace("_", " ");
             upgrade_name = upgrade_name.charAt(0).toUpperCase() + upgrade_name.substring(1);
             for (var e = 0; e < upgrade_name.length; e++) {
                 if (upgrade_name.charAt(e) === " ") {

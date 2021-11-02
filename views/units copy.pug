@@ -1,0 +1,30 @@
+extend layout
+block content
+    link(rel='stylesheet', href='/css/popmotion.css')
+    link(rel='stylesheet', href='/css/units.css')
+    .content
+        #units_textbox
+            h1 Fighter/Merc/Creatures Wiki
+            | Look up any unit to get detailed information about it.
+        .wrap#wrap
+            .content
+                #unit_details
+                h1#unit_name
+                h3#unit_legion
+                img#unit_icon
+                #unit_health
+                #unit_attacktype
+                #unit_defensetype
+                #unit_attackspeed
+                #unit_dps
+                #unit_range
+                #unit_goldcost
+                #unit_bounty
+                #unit_income
+                #unit_totalcost
+                #unit_abilities
+                #unit_upgrades
+                #unit_description
+                #unit_tooltip
+    script(src="/js/units.js")
+    script checkContent();

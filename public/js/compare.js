@@ -85,11 +85,8 @@ function parseStats(player) {
     //compare&parse
     if (counter == 2) {
         for (var i = 0; i < 2; i++) {
-            console.log("parsing " + i);
             document.getElementById("player" + i + "_name").textContent = playername[i];
-            console.log(playername[i]);
             document.getElementById("player" + i + "_gamesplayed").textContent = gamesPlayed[i];
-            console.log(gamesPlayed[i]);
             document.getElementById("player" + i + "_wins").textContent = wins[i];
             document.getElementById("player" + i + "_losses").textContent = losses[i];
             document.getElementById("player" + i + "_winrate").textContent = winRate[i];
@@ -350,13 +347,12 @@ function parseStats(player) {
         if (mastermindXp[0] > mastermindXp[1]) document.getElementById("difference_mastermindxp").innerHTML = "<div class='green'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
         if (mastermindXp[0] < mastermindXp[1]) document.getElementById("difference_mastermindxp").innerHTML = "<div class='red'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
         if (mastermindXp[0] == mastermindXp[1]) document.getElementById("difference_mastermindxp").innerHTML = "<div class='white'>" + document.getElementById("difference_mastermindxp").textContent + "</div>";
-
+        queryBothPlayers(document.getElementById("playername").value, document.getElementById("playername2").value);
     }
 
 }
 
 function getPlayer() {
-    console.log("parsing player")
     counter = 0;
     anzahlSpieler = 2;
     playername = [2];
@@ -410,16 +406,17 @@ function getPlayer() {
     player = [2];
 
     queryPlayer(document.getElementById("playername").value);
-    queryBothPlayers(document.getElementById("playername").value, document.getElementById("playername2").value);
+    
 }
 
 function gamesTogether(games_together, name1, name2){
+    console.log(games_together);
     let games_together_amount = 0;
     let games_together_wins = 0;
     let games_against_amount = 0;
     let games_against_p1 = 0;
     let games_against_p2 = 0;
-    games_together = convertGameToNew(games_together);
+    //games_together = convertGameToNew(games_together);
     for(var i=0;i<games_together.length;i++){
         //together in one team
         try{
@@ -455,6 +452,9 @@ function gamesTogether(games_together, name1, name2){
     }
     
     document.getElementById("games_against").innerHTML="Games against: "+games_against_amount;  
+    if(typeof(playername[0]) == "undefined") console.log("playername1 undefined");
+    if(typeof(playername[1]) == "undefined") console.log("playername1 undefined");
+
     if(games_against_amount>0){
         document.getElementById("wins_player1").innerHTML="Wins "+playername[0]+": "+games_against_p1+" ("+(games_against_p1/games_against_amount*100).toFixed(2)+"%)";
         document.getElementById("wins_player2").innerHTML="Wins "+playername[1]+": "+games_against_p2+" ("+(games_against_p2/games_against_amount*100).toFixed(2)+"%)";
@@ -472,11 +472,6 @@ function apiGetPlayer(callback, playername) {
         if (this.readyState === 4 && this.status === 200) {
             var player = JSON.parse(xhttp.response);
             callback(player);
-        }
-        else{
-            console.log("Error requesting player "+playername+".");
-            console.log(xhttp.statusText);
-            console.log(xhttp.responseType);
         }
     };
     xhttp.open("GET", '/api/profile/player?playername=' + playername, true);
@@ -507,11 +502,16 @@ function apiGetBothPlayers(callback, playername1, playername2) {
 }
 
 function queryBothPlayers(playername1, playername2) {
-    apiGetBothPlayers(function (result) {
-        games_together = JSON.parse(result);
-        gamesTogether(games_together, playername1, playername2);
-        console.log(games_together);
-        return games_together;
+    apiGetBothPlayers(function (result, error) {
+        if(error){
+            console.log(error);
+        }
+        else{
+            games_together = JSON.parse(result);
+            gamesTogether(games_together, playername1, playername2);
+            return games_together;
+        }
+        
     }, playername1, playername2);
 }
 

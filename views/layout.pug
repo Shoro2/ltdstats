@@ -63,7 +63,6 @@ html
                     span.navbar-toggler-icon
                 a.navbar-brand(href='/')
                     img(src="/img/favicon.ico", width="16px", height="16px", style="margin-right:5%;margin-bottom:4%;") 
-                    | LTDStats.com
                 div#navbarsExampleDefault.collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
                         if(title=="Home")
@@ -84,12 +83,14 @@ html
                                 div.dropdown-menu(aria-labelledby='dropdown01')
                                     a.dropdown-item(href='/ladder') Ranked Ladder
                                     a.dropdown-item(href='/ladder?classic') Classic Ladder (inoffical)
+                                    a.dropdown-item(href='/unlucky') Games since last card
                         else
                             li.nav-item.dropdown
                                 a#dropdown02.nav-link.dropdown-toggle(href='/ladder', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Ladder
                                 div.dropdown-menu(aria-labelledby='dropdown01')
                                     a.dropdown-item(href='/ladder') Ranked Ladder
                                     a.dropdown-item(href='/ladder?classic') Classic Ladder (inoffical)
+                                    a.dropdown-item(href='/unlucky') Games since last card
                         if(title=="Games")
                             li.nav-item.active
                                 a.nav-link(href='/replay') Replay
@@ -150,17 +151,11 @@ html
                             input#playername.form-control.mr-sm-2(type='text', placeholder='Player 1', aria-label='Player 1')
                             input#playername2.form-control.mr-sm-2(type='text', placeholder='Player 2', aria-label='Player 2')
                             select#versionselect.form-control.mr-sm-2
-                                option(value="rankedGames_6.0") Season 6
-                                option(value="rankedGames_5.0") Season 5 
-                                option(value="rankedGames_4.0") Season 4 
-                                option(value="rankedGames_3.0") Season 3 
-                                option(value="rankedGames_2.4") Season 2.4 
-                                option(value="rankedGames_2.3") Season 2.3 
-                                option(value="rankedGames_2.0") Season 2.0 
+                                option(value="rankedGames_8.0") Season 8
+                                option(value="rankedGames_7.0") Season 7
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Compare
                     if(title.includes("Replay"))
                         .form-inline.my-2.my-lg-0
-                            button.btn.btn-outline-success.my-2.my-sm-0(onclick="showSelect();" style="margin-right:30px;") Browse a game
                             input#gameid.form-control.mr-sm-2(type='text', placeholder='Game ID', aria-label='Game ID')
                             button.btn.btn-outline-success.my-2.my-sm-0(onclick="getPlayer();") Show
                 link(rel="stylesheet", type="text/css", href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css")

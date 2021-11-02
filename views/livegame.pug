@@ -13,7 +13,10 @@ block content
                     option(value="2.0") Season 2
                     option(value="3.0") Season 3
                     option(value="4.0") Season 4
-                    option(value="5.0" selected) Season 5
+                    option(value="5.0") Season 5
+                    option(value="6.0") Season 6
+                    option(value="7.0") Season 7
+                    option(value="8.0" selected) Season 8
                 select#unitselector(onchange="changeActiveUnit(this.value);")
                 table#leaktable
                     tr
@@ -90,14 +93,13 @@ block content
                 script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
                 ins(class="adsbygoogle" style="display:inline-block;width:728px;height:50px" data-ad-client="ca-pub-2408139751926605" data-ad-slot="4967280011")
                 script (adsbygoogle = window.adsbygoogle || []).push({});
-            input#playername2.form-control.mr-sm-2(type='text', placeholder='Playername', aria-label='Search', style="margin-bottom:2%;width:20%; margin-left:40%")
-            button.btn.my-sm-0(onclick="getPlayer();") Search
-            p
-            | Current Livegames:
-            h2 Normal (ranked)
+            input#playername2.form-control.mr-sm-1(type='text', placeholder='Playername', aria-label='Search', style="margin-bottom:1%;width:20%; margin-left:40%")
+            button.btn.my-sm-0(onclick="getPlayer();" style="margin:1%") Search
+            button.btn.my-sm-0(onclick="switchListView();" style="margin:1%") Switch to Classic
             #normalgames
-            h2 Classic (4v4)
-            #classicgames
+                h2 Normal (ranked)
+            #classicgames(style="display:none")
+                h2 Classic (4v4)
         .winchance#winchancebar(style="display:none;")
             #myProgress
                 #myBar 50%
@@ -163,3 +165,4 @@ block content
     script(src="/js/getGameDetails.js")
     script(src="/js/Chart.js")
     script(src="/js/unitstats.js")
+    script(src="/js/converter.js")

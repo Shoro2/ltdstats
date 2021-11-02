@@ -1,3 +1,9 @@
+/*
+Author: GvR Mr Mister / Shoro2
+ltdstats.com script
+*/
+var debug = false;
+
 var unitstats = [
     // Atlantean
     {name:"angler",value:40},
@@ -108,9 +114,27 @@ var unitstats = [
     { name: "royalguard", value: 185},
     { name: "sacredsteed", value: 80},
     { name: "pegasus", value: 270},
-
+    { name: "elitearcher", value: 145},
+    { name: "trinityarcher", value: 410},
+    { name: "radianthalo", value: 200},
+    { name: "arcofjustice", value: 535},
+    { name: "holyavenger", value: 270},
+    { name: "sovereign", value: 700},
     //buggy api yay
     { name:"atlanteant1", value: 15},
     { name:"atlanteant1u", value: 95},
     { name:"atlanteant1u2", value: 95}
 ];
+
+
+function getTotalValue(input){
+    var val_total = 0;
+    input.forEach(element => {
+        var unitstring = element.substring(0, element.indexOf("_unit_id"));
+        if(debug) console.log(unitstring);
+        var value = unitstats.filter(unitstats => unitstats.name == unitstring.replaceAll("_",""))[0].value;
+        if(debug) console.log(value);
+        val_total = val_total + value;
+    });
+    return val_total
+}
