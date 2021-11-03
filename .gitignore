@@ -6,6 +6,7 @@
 private/
 node_modules/
 logs/
+node_modules/*
 
 # User-specific files
 *.suo
@@ -349,3 +350,4 @@ public/js/sqlcon.js
 .vs/VSWorkspaceState.json
 .vs/test.ltdstats/v15/.suo
 private/sqlcon.js
+*.ts

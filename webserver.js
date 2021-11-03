@@ -130,6 +130,13 @@ app.get('/ladder', (req, res) => {
     if (debug) writeLog("/ladder");
 });
 
+app.get('/unlucky', (req, res) => {
+    res.render('unluckytop', {
+        title: 'Unlucky top 20'
+    });
+    if (debug) writeLog("/unlucky");
+});
+
 app.get('/builder', (req, res) => {
     res.render('builder', {
         title: 'Builder'
@@ -354,6 +361,11 @@ app.get('/guides', (req, res) => {
         case "bonnyvampire":
             res.render('guides/mastermind/vampire', {
                 title: 'Bonny´s Aura-Guide: Vampire'
+            });
+            break;
+        case "synergies":
+            res.render('guides/mastermind/synergies', {
+                title: 'Mastermind Synergies'
             });
             break;
         //general
@@ -767,6 +779,7 @@ app.get('/api/getLivegames', (req, res) => {
 
 
 
+
 app.get('/sql/stats/wavegamesended', (req, res) => {
     var version = req.query.version;
     if (version.substring(0, 1) === "v") version = version.substring(1);
@@ -798,6 +811,8 @@ app.get('/mongo/stats/legions/winrate', (req, res) => {
     if (version.substring(0, 1) === "v") version = version.substring(1);
     if(parseInt(version.substring(0, 1))<3) var queryurl = 'http://127.0.0.1:3666/stats/patch?db=rankedGames_';
     else queryurl = 'http://127.0.0.1:3666/stats/patch?db=classicGames_';
+    console.log(version);
+    console.log(minelo);
     writeLog( queryurl+ version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo);
     http.get( queryurl + version.substring(0, 3) + '&type=pickwinchances&version=' + version + "&minelo=" + minElo, (resp) => {
         let data = '';
@@ -993,7 +1008,31 @@ app.get('/mongo/getGames', (req, res) => {
     
 });
 
-
+app.get('/api/getPlayerElo', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+        body: JSON.stringify({
+            query: '{player(name:"' + playername + '"){name,statistics}}'
+        })
+    }).then(function (response) {
+        if (response.ok) {
+            return response.json();
+        }
+        else {
+            var error = new Error(response.statusText);
+            error.response = response;
+            writeLog(error);
+            console.log(error);
+        }
+    }).then(function (data) {
+        //player object an frontend
+        res.json(data.data);
+    }).catch(function (err) {
+        writeLog(err);
+    });
+});
 
 
 
@@ -1026,6 +1065,7 @@ app.get('/api/playerElo', (req, res) => {
             }
         }).then(function (data) {
             data.data.player.statistics = JSON.parse(data.data.player.statistics);
+
             http.get('http://127.0.0.1:3666/db/livegames?myobj=' + playername, (resp) => {
                 let result = '';
 
@@ -1036,8 +1076,9 @@ app.get('/api/playerElo', (req, res) => {
 
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
-                    if (result !== null) {
+                    if (!result) {
                         let livegame = JSON.parse(result);
+                        console.log(result);
                         res.render("elo", {
                             meineElo: data.data.player.statistics.overallElo,
                             title: "Elo",
@@ -1063,6 +1104,55 @@ app.get('/api/playerElo', (req, res) => {
         });
 });
 
+app.get('/api/playerInfo', (req, res) => {
+    var playername = req.query.playername;
+    fetch('https://api.legiontd2.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+        body: JSON.stringify({
+            query: '{player(name:"' + playername + '"){name,statistics}}'
+        })
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                var error = new Error(response.statusText);
+                error.response = response;
+                writeLog(error);
+                console.log(error);
+            }
+        }).then(function (data) {
+            data.data.player.statistics = JSON.parse(data.data.player.statistics);
+
+            http.get('http://127.0.0.1:3666/db/livegames?myobj=' + playername, (resp) => {
+                let result = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    result += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    if (!result) {
+                        let livegame = JSON.parse(result);
+                        console.log(result);
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end("Elo: "+data.data.player.statistics.overallElo);
+                    }
+                    else {
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end("Elo: "+data.data.player.statistics.overallElo);
+                    }
+                });
+
+            }).on("error", (err) => {
+                writeLog("Error: " + err.message);
+            });
+        });
+});
 
 
 app.get('/api/units', (req, res) => {
@@ -1071,7 +1161,7 @@ app.get('/api/units', (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
         body: JSON.stringify({
-            query: '{unit(name: "' + unitname + '"){id,name,legion,description,tooltip,iconpath,abilities{name,tooltip,iconpath},armortype,attacktype,attackspeed,range,upgradesto,foodcost,goldcost,totalvalue,totalfood,dps,health,bounty,income}}'
+            query: '{unit(name: "' + unitname + '"){id,name,legion,description,tooltip,iconPath,abilities{name,tooltip},armorType,attackType,attackSpeed,range,upgradesTo,goldCost,totalValue,dps,hp,bounty,income}}'
         })
     })
         .then(function (response) {
@@ -1088,7 +1178,7 @@ app.get('/api/units', (req, res) => {
             //player object an frontend
             res.json(data.data);
         }).catch(function (err) {
-            writeLog(error);
+            writeLog(err);
         });
 });
 
@@ -1097,7 +1187,7 @@ app.get('/api/replay/getGame', (req, res) => {
     fetch('https://api.legiontd2.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{ game(gameid: "' + gameid + '") { ts, leftkingpercenthp, rightkingpercenthp, gameDetails{ name,position, wave, legion, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave, incomePerWave, legionSpell } } }' })
+        body: JSON.stringify({ query: '{ game(gameid: "' + gameid + '"){ ts, leftKingPercentHP, rightKingPercentHP, endingWave, gameDetails{ playerProfile{name},position, legion, unitsPerWave, leaksPerWave, mercsReceivedPerWave, mercsSentPerWave, workersPerWave, netWorthPerWave, incomePerWave, legionSpell } } }' })
     })
         .then(function (response) {
             if (response.ok) {
@@ -1113,7 +1203,7 @@ app.get('/api/replay/getGame', (req, res) => {
             //player object an frontend
             res.json(data.data);
         }).catch(function (err) {
-            writeLog(error);
+            writeLog(err);
         });
 });
 
@@ -1122,7 +1212,7 @@ app.get('/api/replay/getTopPlayer', (req, res) => {
     fetch('https://api.legiontd2.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{filteredPlayers(orderby: "' + legion + 'Elo", direction: DESC, limit: 10){players{name,statistics,filteredGamesQuery(limit: 50) {games{game_id,gameresult,legion}}}}}' })
+        body: JSON.stringify({ query: '{filteredPlayers(orderby: "' + legion + 'Elo", direction: DESC, limit: 10){players{name,statistics,games{id,gameResult,legion}}}}' })
     })
         .then(function (response) {
             if (response.ok) {
@@ -1138,7 +1228,7 @@ app.get('/api/replay/getTopPlayer', (req, res) => {
             //player object an frontend
             res.json(data.data);
         }).catch(function (err) {
-            writeLog(error);
+            writeLog(err);
         });
 });
 
@@ -1169,37 +1259,78 @@ app.get('/api/ladder', (req, res) => {
         });
 });
 
+app.get('/api/streamers', (req, res) => {
+    var request_url = "http://127.0.0.1:3666/streamer/list?";
+    http.get(request_url, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if (data){
+                res.json(data);
+
+            } 
+            else res.send("no data");
+        });
+
+    }).on("error", (err) => {
+        writeLog("Error: " + err.message);
+    });
+
+});
 
 //todo: check games order
 app.get('/api/profile/playerOverallGames', (req, res) => {
-    var date1 = new Date();
     var playername = req.query.playername.replace("%20", " ");
-    writeLog(playername);
-    var meinPlayer;
-    fetch('https://api.legiontd2.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{player(name: "'+ playername +'"){games(limit: 150){count,games{id,ts,playerCount,humanCount,leftKingPercentHP,rightKingPercentHP,endingWave,gameLength,version,queueType,gameDetails{playerProfile{id,name},position,legion,isCross,gameResult,overallElo,unitsPerWave,leaksPerWave,mercsReceivedPerWave,mercsSentPerWave,workersPerWave,netWorthPerWave,incomePerWave,legionSpell}}}}}' })
-    })
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-            else {
-                var error = new Error(response.statusText);
-                error.response = response;
-                writeLog(error);
-            }
-        }).then(function (data) {
-            //player object an frontend
-            meinPlayer = data.data;
-            res.json(meinPlayer);
-        }).catch(function (err) {
-            writeLog(err);
+    var request_url = "http://127.0.0.1:3666/db/games?action=search&db=rankedGames_8.0&type=playername&limit=0&formating=none&name=" + playername;
+    http.get(request_url, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
         });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if(data) res.json(data);
+            else{
+                res.send("no data");
+            }
+        });
+
+    }).on("error", (err) => {
+        writeLog("Error: " + err.message);
+    });
+
 });
 
+app.get('/api/profile/playerOverallGamesClassic', (req, res) => {
+    var playername = req.query.playername.replace("%20", " ");
+    var request_url = "http://127.0.0.1:3666/db/games?action=search&db=classicGames_8.0&type=playername&limit=0&formating=none&name=" + playername;
+    http.get(request_url, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
 
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            if(data) res.json(data);
+            else{
+                res.send("no data");
+            }
+        });
+
+    }).on("error", (err) => {
+        writeLog("Error: " + err.message);
+    });
+
+});
 
 // player with 100 last games
 app.get('/api/profile/player100', (req, res) => {
@@ -1285,7 +1416,7 @@ app.get('/api/stats/fighter', (req, res) => {
     fetch('https://api.legiontd2.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-        body: JSON.stringify({ query: '{filteredUnits(legion:Mech){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' })
+        body: JSON.stringify({ query: '{filteredUnits(legion:Mech){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
     })
         .then(function (response) {
             if (response.ok) {
@@ -1303,7 +1434,7 @@ app.get('/api/stats/fighter', (req, res) => {
             fetch('https://api.legiontd2.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-                body: JSON.stringify({ query: '{filteredUnits(legion:Grove){units{name, attacktype, armortype, dps, health,totalvalue,goldcost,legion,abilities{name}}}}' })
+                body: JSON.stringify({ query: '{filteredUnits(legion:Grove){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
             })
                 .then(function (response) {
                     if (response.ok) {
@@ -1321,7 +1452,7 @@ app.get('/api/stats/fighter', (req, res) => {
                     fetch('https://api.legiontd2.com', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-                        body: JSON.stringify({ query: '{filteredUnits(legion:Forsaken){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' })
+                        body: JSON.stringify({ query: '{filteredUnits(legion:Forsaken){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
                     })
                         .then(function (response) {
                             if (response.ok) {
@@ -1339,7 +1470,7 @@ app.get('/api/stats/fighter', (req, res) => {
                             fetch('https://api.legiontd2.com', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-                                body: JSON.stringify({ query: '{filteredUnits(legion:Element){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' })
+                                body: JSON.stringify({ query: '{filteredUnits(legion:Element){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
                             })
                                 .then(function (response) {
                                     if (response.ok) {
@@ -1357,7 +1488,7 @@ app.get('/api/stats/fighter', (req, res) => {
                                     fetch('https://api.legiontd2.com', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
-                                        body: JSON.stringify({ query: '{filteredUnits(legion:Atlantean){units{name, attacktype, armortype, dps, health,totalvalue,legion,goldcost,abilities{name}}}}' })
+                                        body: JSON.stringify({ query: '{filteredUnits(legion:Atlantean){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
                                     })
                                         .then(function (response) {
                                             if (response.ok) {
@@ -1372,14 +1503,71 @@ app.get('/api/stats/fighter', (req, res) => {
                                         }).then(function (data) {
                                             //player object an frontend
                                             allFighters.push(data.data.filteredUnits.units);
-                                            res.json(allFighters);
-                                        }).catch(function (err) {
-                                            writeLog(err);
-                                        });
+                                            fetch('https://api.legiontd2.com', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+                                                body: JSON.stringify({ query: '{filteredUnits(legion:Divine){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
+                                            })
+                                                .then(function (response) {
+                                                    if (response.ok) {
+                                                        return response.json();
+                                                    }
+                                                    else {
+                                                        var error = new Error(response.statusText);
+                                                        error.response = response;
+                                                        writeLog(error);
+                                                        console.log(error);
+                                                    }
+                                                }).then(function (data) {
+                                                    //player object an frontend
+                                                    allFighters.push(data.data.filteredUnits.units);
+                                                    fetch('https://api.legiontd2.com', {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+                                                        body: JSON.stringify({ query: '{filteredUnits(legion:Shrine){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
+                                                    })
+                                                        .then(function (response) {
+                                                            if (response.ok) {
+                                                                return response.json();
+                                                            }
+                                                            else {
+                                                                var error = new Error(response.statusText);
+                                                                error.response = response;
+                                                                writeLog(error);
+                                                                console.log(error);
+                                                            }
+                                                        }).then(function (data) {
+                                                            //player object an frontend
+                                                            allFighters.push(data.data.filteredUnits.units);
+                                                            fetch('https://api.legiontd2.com', {
+                                                                method: 'POST',
+                                                                headers: { 'Content-Type': 'application/json', "x-api-key": meinKey, "x-tyk-key": meinKey2 },
+                                                                body: JSON.stringify({ query: '{filteredUnits(legion:Nomad){units{name, attackType, armorType, dps, hp,totalValue,legion,goldCost,abilities{name}}}}' })
+                                                            })
+                                                                .then(function (response) {
+                                                                    if (response.ok) {
+                                                                        return response.json();
+                                                                    }
+                                                                    else {
+                                                                        var error = new Error(response.statusText);
+                                                                        error.response = response;
+                                                                        writeLog(error);
+                                                                        console.log(error);
+                                                                    }
+                                                                }).then(function (data) {
+                                                                    //player object an frontend
+                                                                    allFighters.push(data.data.filteredUnits.units);
+                                                                    res.json(allFighters);
+                                                                }).catch(function (err) {
+                                                                    writeLog(err);
+                                                                });
+                                                        });
                                 });
-                        });
                 });
         });
+});
+});
+});
 });
 /*
 app.get('/api/stats/legions/winrate', (req, res) => {
